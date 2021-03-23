@@ -1,0 +1,11 @@
+{
+  "targets": {
+    "odis-version-history": {
+      "hosting": {
+        "versionHistory": [
+          "odis-version-history"
+        ]
+      }
+    }
+  }
+}

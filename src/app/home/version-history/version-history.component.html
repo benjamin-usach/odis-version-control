@@ -1,0 +1,48 @@
+<div class="container">
+    <div class="row" style="height: 100%;">
+      <div class="col-sm">
+      </div>
+      <div class="col-10">
+        <br><br>  
+        <h1 class="text-info">ODIS Version history</h1>
+        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Consequatur velit dignissimos, voluptas, beatae deleniti neque...</p>
+        <br><br>
+        <ngb-accordion #acc="ngbAccordion" [closeOthers]="true">
+          <ngb-panel *ngFor="let item of placeholder">
+            <ng-template ngbPanelTitle style="width: 100%;">
+              <div class="d-flex">
+                <div class="p-2 flex-fill">
+                  VERSION {{item}}
+
+                </div>
+                <div class="p-3">
+                  Release name
+
+                </div>
+                <div class="p-1">
+                  date yyyy-mm-dd
+
+                </div>
+                <div class="p-3">
+                  detail
+
+                </div>
+                <div class="p-3 ">
+                  [hidden]
+
+                </div>
+              </div>
+            </ng-template>
+            <ng-template ngbPanelContent>
+              Mostrando item #{{item}}
+            </ng-template>
+          </ngb-panel>
+        </ngb-accordion>>
+      </div>
+      <div class="col-sm">
+      </div>
+    </div>
+  
+</div>
+
+<button type="button" class="btn btn-primary rounded-circle sticky-bottom"><i class="fas fa-plus"></i></button>
