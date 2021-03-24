@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { version } from 'src/app/interfaces/version.interface';
+import { FirebaseService } from 'src/app/services/firebase.service';
 
 
 @Component({
@@ -9,17 +11,37 @@ import { Component, OnInit } from '@angular/core';
 export class VersionHistoryComponent implements OnInit {
 
 
-  placeholder: number[] = [0,1,2,3,4]
+  versions: version[] = [];
 
   selected = -1;
 
-  constructor() { }
+  constructor( private fbs: FirebaseService,
+
+    ) { }
 
   ngOnInit(): void {
-
+    this.fbs.getCollectionfb("version").subscribe(resp => {
+      console.log(resp);
+      this.versions = resp;
+      console.log("versions: ", this.versions);
+    })
   }
 
+  show( p: any ){
+    console.log(p);
+  }
 
+  // openDialog(): void {
+  //   const dialogRef = this.dialog.open(AgregarComponent, {
+  //     width: '500px',
+  //     disableClose:true
+
+  //   });
+  //   dialogRef.afterClosed().subscribe(result => {
+  //     console.log('The dialog was closed');
+
+  //   });
+  // }
 
   expand(){}
 

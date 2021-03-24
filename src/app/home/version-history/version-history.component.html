@@ -7,36 +7,34 @@
         <h1 class="text-info">ODIS Version history</h1>
         <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Consequatur velit dignissimos, voluptas, beatae deleniti neque...</p>
         <br><br>
-        <ngb-accordion #acc="ngbAccordion" [closeOthers]="true">
-          <ngb-panel *ngFor="let item of placeholder; let i = index" id = "{{i}}_panel">
+        <ngb-accordion #acc="ngbAccordion" [closeOthers]="true" *ngIf="versions.length != 0; else loading">
+          <ngb-panel *ngFor="let version of versions; let i = index" id="id_{{version.id}}">
             <ng-template ngbPanelHeader class= "cardClass" style="width: 100%;">
-              <button ngbPanelToggle style="width: 100%; padding: 0; border: none; background: none;" (click)="show($event)">
+              <button ngbPanelToggle style="width: 100%; padding: 0; border: none; background: none;">
                 <div class="d-flex flex-row pb-2 pt-2">
-                  <div class="flex-col-2" >
-                    <strong> VERSION {{item}} </strong>
+                  <div class="col-3 text-left" >
+                    <div class="row"><h5><strong>{{version.data.ver_number}} </strong></h5></div>
+                    <div class="row"><small>{{version.data.ver_release_date.seconds * 1000 | date:'dd-MM-YYYY'}}</small></div>
                   </div>
                   <div class="col-3">
-                    Release name
+                    Creado por: {{version.data.ver_creado_por | titlecase}}
                   </div>
-                  <div class="col-3">
-                    date yyyy-mm-dd
+                  <div class="col-3 flex-fill">
+                    Cat: {{version.data.categoria}}
                   </div>
-                  <div class="col-2">
-                    detail
-                  </div>
-                  <div class="col-2">
-                    [hidden]
+                  <div class="col-3 animate__animated animate__fadeIn" *ngIf="acc.isExpanded('id_'+version.id)">
+                    Download • Try • Buy
                   </div>
                 </div>
               </button>
             </ng-template>
             <ng-template ngbPanelContent>
               <div  style="height: 400px;">
-                Mostrando item #{{item}}
+                Descripcion: {{version.data.descripcion}}
               </div>
             </ng-template>
           </ngb-panel>
-        </ngb-accordion>>
+        </ngb-accordion>
       </div>
       <div class="col-sm">
       </div>
@@ -44,4 +42,10 @@
   
 </div>
 
-<button type="button" class="btn btn-primary rounded-circle sticky-bottom"><i class="fas fa-plus"></i></button>
+<button type="button" class="btn btn-primary btn-lg sticky-bottom rounded-circle float-right m-3" style= "position: -webkit-sticky; position: sticky; bottom: 1%; float: right;"><i class="fas fa-plus"></i></button>
+
+<ng-template #loading>
+  <div class="d-flex align-content-center flex-wrap">
+    <i class="fas fa-spinner fa-spin fa-3x" style="color: #007bff;"></i>
+  </div>
+</ng-template>
