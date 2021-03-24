@@ -10,8 +10,10 @@ import { map } from 'rxjs/operators';
 
 export class FirebaseService {
 
-  constructor(private _afs: AngularFirestore) {
-  }
+  constructor(
+    private _afs: AngularFirestore,
+    
+    ) {}
 
 
   getCollectionfb(ruta: string): Observable<any> {
@@ -44,6 +46,6 @@ export class FirebaseService {
         resp => console.log(resp)
       )
       .catch(err=> console.log(err))
-  } 
+  }
 
 }

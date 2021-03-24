@@ -8,33 +8,32 @@
         <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Consequatur velit dignissimos, voluptas, beatae deleniti neque...</p>
         <br><br>
         <ngb-accordion #acc="ngbAccordion" [closeOthers]="true">
-          <ngb-panel *ngFor="let item of placeholder">
-            <ng-template ngbPanelTitle style="width: 100%;">
-              <div class="d-flex">
-                <div class="p-2 flex-fill">
-                  VERSION {{item}}
-
+          <ngb-panel *ngFor="let item of placeholder; let i = index" id = "{{i}}_panel">
+            <ng-template ngbPanelHeader class= "cardClass" style="width: 100%;">
+              <button ngbPanelToggle style="width: 100%; padding: 0; border: none; background: none;" (click)="show($event)">
+                <div class="d-flex flex-row pb-2 pt-2">
+                  <div class="flex-col-2" >
+                    <strong> VERSION {{item}} </strong>
+                  </div>
+                  <div class="col-3">
+                    Release name
+                  </div>
+                  <div class="col-3">
+                    date yyyy-mm-dd
+                  </div>
+                  <div class="col-2">
+                    detail
+                  </div>
+                  <div class="col-2">
+                    [hidden]
+                  </div>
                 </div>
-                <div class="p-3">
-                  Release name
-
-                </div>
-                <div class="p-1">
-                  date yyyy-mm-dd
-
-                </div>
-                <div class="p-3">
-                  detail
-
-                </div>
-                <div class="p-3 ">
-                  [hidden]
-
-                </div>
-              </div>
+              </button>
             </ng-template>
             <ng-template ngbPanelContent>
-              Mostrando item #{{item}}
+              <div  style="height: 400px;">
+                Mostrando item #{{item}}
+              </div>
             </ng-template>
           </ngb-panel>
         </ngb-accordion>>
