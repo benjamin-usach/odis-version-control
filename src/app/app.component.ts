@@ -15,7 +15,6 @@ export class AppComponent{
   obj = {
     categoria: "jICcX0aawQh2Cm4eMsNS",
     descripcion: "Lorem ipsum dolor sit amet consectetur, adipisicing elit. Iure voluptas eligendi magni, fugit quidem quaerat. Labore ratione, obcaecati",
-    id: "WmtcOn5rINS3CKfOZUBg",
     ver_creado_por: "benjamin.bravo",
     ver_number: "1.0.0",
     ver_release_date: {

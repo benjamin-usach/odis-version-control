@@ -14,7 +14,7 @@
                 <div class="d-flex flex-row pb-2 pt-2">
                   <div class="col-3 text-left" >
                     <div class="row"><h5><strong>{{version.data.ver_number}} </strong></h5></div>
-                    <div class="row"><small>{{version.data.ver_release_date.seconds * 1000 | date:'dd-MM-YYYY'}}</small></div>
+                    <div class="row"><small>{{version.data.ver_release_date * 1000 | date:'dd-MM-YYYY'}}</small></div>
                   </div>
                   <div class="col-3">
                     Creado por: {{version.data.ver_creado_por | titlecase}}

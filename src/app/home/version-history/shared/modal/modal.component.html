@@ -8,12 +8,56 @@
 <div class="mat-app-background">
   <div class="card-body">
     <div class="mat-dialog-content">
-      <div></div>
+      <div class="col">
+        <form autocomplete="off" [formGroup]="versionForm">
+          <div class="row form-group">
+            <label for="ver_number">Version ID</label>
+            <input
+              type="text"
+              id="ver_number"
+              class="form-control"
+              formControlName="ver_number">
+          </div>
+          <div class="row form-group">
+            <label for="categoria">Categoria</label>
+            <input
+              type="text"
+              id="categoria"
+              class="form-control"
+              formControlName="categoria">
+          </div>
+          <div class="row form-group">
+            <label for="ver_creado_por ">Autor</label>
+            <input
+              type="text"
+              id="ver_creado_por"
+              class="form-control"
+              formControlName="ver_creado_por">
+          </div>
+          <div class="row form-group">
+            <label for="ver_release_date">Fecha de creación</label>
+            <input
+              type="date"
+              id="ver_release_date"
+              class="form-control"
+              formControlName="ver_release_date">
+          </div>
+          <div class="row form-group">
+            <label for="descripcion">Descripcion</label>
+            <input
+              type="text"
+              id="descripcion"
+              class="form-control"
+              formControlName="descripcion">
+          </div>
+
+        </form>
+      </div>
     </div>
     <div class="row">
       <div class="col-md-12">
         <div mat-dialog-actions align="center">
-          <button mat-stroked-button color="primary" (click)="cerrar()">Imprimir</button>
+          <button mat-stroked-button color="primary" (click)="onSubmit()">Imprimir</button>
           <button mat-stroked-button color="accent" (click)="cerrar()">Imprimir Personalizado</button>
           <button mat-stroked-button color="warn" (click)="cerrar()">Cancelar</button>
         </div>

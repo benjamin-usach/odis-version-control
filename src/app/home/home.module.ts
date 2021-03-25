@@ -4,6 +4,7 @@ import { VersionHistoryComponent } from './version-history/version-history.compo
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { MaterialModule } from '../material/material.module';
 import { ModalComponent } from './version-history/shared/modal/modal.component';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 
 
@@ -13,7 +14,9 @@ import { ModalComponent } from './version-history/shared/modal/modal.component';
   imports: [
     CommonModule,
     NgbModule,
-    MaterialModule
+    MaterialModule,
+    FormsModule,
+    ReactiveFormsModule,
   ],
   exports: [
     NgbModule

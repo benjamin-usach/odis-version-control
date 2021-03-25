@@ -5,10 +5,7 @@ export interface version{
         id: string;
         ver_creado_por: string;
         ver_number: string;
-        ver_release_date: {
-            seconds: number;
-            nanoseconds: number;
-        }
+        ver_release_date: number
     };
     id: string;
 
