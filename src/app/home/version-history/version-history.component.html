@@ -29,8 +29,14 @@
               </button>
             </ng-template>
             <ng-template ngbPanelContent>
-              <div  style="height: 400px;">
-                Descripcion: {{version.data.descripcion}}
+                <div class="row">
+                  <div class="col-8">
+                  Descripcion: {{version.data.descripcion}}
+                </div>
+                <span flex class="spacer"></span>
+                <div class="col">
+                  <button mat-button mat-raised-button color="warn" class="align-right" (click) = borrar(version.id)><mat-icon> delete </mat-icon> Borrar </button>
+                </div>
               </div>
             </ng-template>
           </ngb-panel>

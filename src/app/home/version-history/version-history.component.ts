@@ -46,4 +46,8 @@ export class VersionHistoryComponent implements OnInit {
 
   expand(){}
 
+  borrar(id: string){
+    this.fbs.deleteCollectionFb('version', id)
+  }
+
 }

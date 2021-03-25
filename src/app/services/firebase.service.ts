@@ -43,7 +43,7 @@ export class FirebaseService {
     
     this._afs.collection(ruta).add(objeto)
       .then(
-        resp => console.log(resp)
+        resp => console.log("post answer:", resp.parent.id)
       )
       .catch(err=> console.log(err))
   }
@@ -52,6 +52,13 @@ export class FirebaseService {
     this._afs.doc(`${ruta}/${id}`).delete()
       .then(ok => console.log(ok))
       .catch(err => console.log(err))
+  }
+
+  updateCollectionFB(ruta: string, id: string, objeto: Object){
+    this._afs.doc(`${ruta}/${id}`).update(objeto)
+    .then(resp => console.log(resp))
+    .catch(err => console.log(err));
+
   }
 
 }
