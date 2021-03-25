@@ -33,10 +33,11 @@ export class VersionHistoryComponent implements OnInit {
     console.log(p);
   }
 
-  openDialog(): void {
+  openDialog(data: object = {}): void {
     const dialogRef = this.dialog.open(ModalComponent, {
       width: '500px',
-      disableClose:true
+      disableClose:true,
+      data: data
     });
     dialogRef.afterClosed().subscribe(result => {
       console.log('The dialog was closed');
@@ -48,6 +49,10 @@ export class VersionHistoryComponent implements OnInit {
 
   borrar(id: string){
     this.fbs.deleteCollectionFb('version', id)
+  }
+
+  editar(data: any){
+    this.openDialog(data);
   }
 
 }

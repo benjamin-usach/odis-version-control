@@ -1,10 +1,10 @@
 import { stringify } from '@angular/compiler/src/util';
-import { Component, OnInit } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { MatDialogRef } from '@angular/material/dialog';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { version } from 'src/app/interfaces/version.interface';
 import { FirebaseService } from 'src/app/services/firebase.service';
 import Swal from 'sweetalert2';
-import { VersionHistoryComponent } from '../../version-history.component';
 
 @Component({
   selector: 'app-modal',
@@ -13,25 +13,28 @@ import { VersionHistoryComponent } from '../../version-history.component';
 })
 export class ModalComponent implements OnInit {
 
-  constructor(  private dialogRef: MatDialogRef<VersionHistoryComponent>,
-                private fb: FirebaseService
+  constructor(  private dialogRef: MatDialogRef<ModalComponent>,
+                private fb: FirebaseService,
+                @Inject(MAT_DIALOG_DATA) public data:version
     ) { }
 
   versionForm!: FormGroup;
   //ver_id_validator: RegExp = new RegExp('[0-9]{1,3}\.[0-9]{1,3}\.[0-9]');
 
   //TODO: VALIDACIONES!!
-
-  post: Object = {}
+  
+  //date =  new Date(this.data[0].data.ver_release_date*1000 ).toISOString().slice(0,10);
+  editar = this.data? true: false;
+  
 
 
   private initForm(){
     this.versionForm = new FormGroup({
-      'categoria':        new FormControl(null, Validators.required),
-      'descripcion':      new FormControl(null, Validators.required),
-      'ver_creado_por':   new FormControl(null, Validators.required),
-      'ver_release_date': new FormControl(null, Validators.required),
-      'ver_number':       new FormControl("0.0.0", Validators.required)
+      'categoria':        new FormControl( this.data.data.categoria       || null,    Validators.required),
+      'descripcion':      new FormControl( this.data.data.descripcion     || null,    Validators.required),
+      'ver_creado_por':   new FormControl( this.data.data.ver_creado_por  || null,    Validators.required),
+      'ver_release_date': new FormControl( this.data                      || null,    Validators.required),
+      'ver_number':       new FormControl( this.data.data.ver_number      || "0.0.0", Validators.required)
     });
 
   }
@@ -39,10 +42,10 @@ export class ModalComponent implements OnInit {
 
   ngOnInit(): void {
     this.initForm();
+    console.log(this.editar)
   }
 
   onSubmit(){
-    this.post = this.versionForm.value;
     const date = new Date(this.versionForm.get('ver_release_date')?.value).getTime() / 1000;
     this.versionForm.patchValue({'ver_release_date': Math.trunc(date)});
     this.fb.postCollectionFb("version", this.versionForm.value);

@@ -8,20 +8,7 @@ import { FirebaseService } from './services/firebase.service';
 })
 
 export class AppComponent{
-  title = 'versionHistory';  
-
-  
-
-  obj = {
-    categoria: "jICcX0aawQh2Cm4eMsNS",
-    descripcion: "Lorem ipsum dolor sit amet consectetur, adipisicing elit. Iure voluptas eligendi magni, fugit quidem quaerat. Labore ratione, obcaecati",
-    ver_creado_por: "benjamin.bravo",
-    ver_number: "1.0.0",
-    ver_release_date: {
-      seconds: 0,
-      nanoseconds: 0
-    }
-  }
+  title = 'ODIS Version History';  
 
   constructor(
     private fb: FirebaseService
@@ -30,16 +17,5 @@ export class AppComponent{
   ngOnInit(){
   }
 
-
-  agregar(){
-    const today = new Date().getTime() / 1000;
-    this.obj.ver_release_date.seconds = Math.trunc(today);
-    this.fb.postCollectionFb("version", this.obj);
-  }
-
-  verDatos(){
-    this.fb.getCollectionfb("version").subscribe(data => console.log(data));
-
-  }
 
 }
