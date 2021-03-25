@@ -48,11 +48,27 @@ export class FirebaseService {
       .catch(err=> console.log(err))
   }
 
+  /**
+   * @param ruta: ruta de la colección donde borrar el documento 
+   * @param id  : id del documento a borrar
+   * 
+   * returns: none
+   */
+
   deleteCollectionFb( ruta: string, id: string ){
     this._afs.doc(`${ruta}/${id}`).delete()
       .then(ok => console.log(ok))
       .catch(err => console.log(err))
   }
+
+  /**
+   * @param ruta    : ruta del documento a actualizar
+   * @param id      : id del documento a actualizar
+   * @param objeto  : objeto actualizado [puede ser el objeto entero o solo los campos deseados]
+   * 
+   * 
+   * 
+   */
 
   updateCollectionFB(ruta: string, id: string, objeto: Object){
     this._afs.doc(`${ruta}/${id}`).update(objeto)
