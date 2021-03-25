@@ -48,4 +48,10 @@ export class FirebaseService {
       .catch(err=> console.log(err))
   }
 
+  deleteCollectionFb( ruta: string, id: string ){
+    this._afs.doc(`${ruta}/${id}`).delete()
+      .then(ok => console.log(ok))
+      .catch(err => console.log(err))
+  }
+
 }

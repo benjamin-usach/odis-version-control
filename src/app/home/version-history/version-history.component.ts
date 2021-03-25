@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
 import { version } from 'src/app/interfaces/version.interface';
 import { FirebaseService } from 'src/app/services/firebase.service';
+import { ModalComponent } from './shared/modal/modal.component';
 
 
 @Component({
@@ -16,7 +18,7 @@ export class VersionHistoryComponent implements OnInit {
   selected = -1;
 
   constructor( private fbs: FirebaseService,
-
+               private dialog: MatDialog
     ) { }
 
   ngOnInit(): void {
@@ -31,17 +33,16 @@ export class VersionHistoryComponent implements OnInit {
     console.log(p);
   }
 
-  // openDialog(): void {
-  //   const dialogRef = this.dialog.open(AgregarComponent, {
-  //     width: '500px',
-  //     disableClose:true
+  openDialog(): void {
+    const dialogRef = this.dialog.open(ModalComponent, {
+      width: '500px',
+      disableClose:true
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('The dialog was closed');
 
-  //   });
-  //   dialogRef.afterClosed().subscribe(result => {
-  //     console.log('The dialog was closed');
-
-  //   });
-  // }
+    });
+  }
 
   expand(){}
 

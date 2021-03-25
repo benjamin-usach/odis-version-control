@@ -1,0 +1,23 @@
+<meta name="Description" content="Component" />
+<div class="modal-header">
+  <h5 class="modal-title">Título</h5>
+  <button type="button" class="close" (click)="cerrar()">
+    <mat-icon class="mat-icon-close">close</mat-icon>
+  </button>
+</div>
+<div class="mat-app-background">
+  <div class="card-body">
+    <div class="mat-dialog-content">
+      <div></div>
+    </div>
+    <div class="row">
+      <div class="col-md-12">
+        <div mat-dialog-actions align="center">
+          <button mat-stroked-button color="primary" (click)="cerrar()">Imprimir</button>
+          <button mat-stroked-button color="accent" (click)="cerrar()">Imprimir Personalizado</button>
+          <button mat-stroked-button color="warn" (click)="cerrar()">Cancelar</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
