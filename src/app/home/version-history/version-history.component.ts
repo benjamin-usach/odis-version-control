@@ -25,7 +25,7 @@ export class VersionHistoryComponent implements OnInit {
     this.fbs.getCollectionfb("version").subscribe(resp => {
       console.log(resp);
       this.versions = resp;
-      console.log("versions: ", this.versions);
+      this.versions.sort()
     })
   }
 

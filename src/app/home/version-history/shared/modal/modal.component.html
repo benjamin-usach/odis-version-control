@@ -1,6 +1,7 @@
 <meta name="Description" content="Component" />
 <div class="modal-header">
-  <h5 class="modal-title">Título</h5>
+  <h5 class="modal-title" *ngIf="!editar">Crear nueva entrada</h5>
+  <h5 class="modal-title" *ngIf="editar">Editar entrada </h5>
   <button type="button" class="close" (click)="cerrar()">
     <mat-icon class="mat-icon-close">close</mat-icon>
   </button>
