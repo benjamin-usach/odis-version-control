@@ -57,10 +57,9 @@
     </div>
     <div class="row">
       <div class="col-md-12">
-        <div mat-dialog-actions align="center">
+        <div class= 'mat-dialog-actions' align="center">
           <button mat-stroked-button color="primary" (click)="onSubmit()" *ngIf="!editar">Crear</button>
           <button mat-stroked-button color="primary" (click)="onSubmit()" *ngIf="editar">Editar</button>
-          <button mat-stroked-button color="accent" (click)="cerrar()">Imprimir Personalizado</button>
           <button mat-stroked-button color="warn" (click)="cerrar()">Cancelar</button>
         </div>
       </div>

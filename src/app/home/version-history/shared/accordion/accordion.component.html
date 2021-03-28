@@ -1,0 +1,49 @@
+<ngb-accordion #acc="ngbAccordion" [closeOthers]="true" *ngIf="versions.length != 0; else loading">
+    <ngb-panel *ngFor="let version of versions" id="id_{{version.id}}">
+        <ng-template ngbPanelHeader class="cardClass" style="width: 100%;">
+            <button ngbPanelToggle style="width: 100%; padding: 0; border: none; background: none;">
+                <div class="d-flex flex-row pb-2 pt-2">
+                    <div class="col-3 text-left">
+                        <div class="row">
+                            <h5><strong>{{version.data.ver_number}} </strong></h5>
+                        </div>
+                        <div class="row"><small>{{version.data.ver_release_date * 1000 |
+                                date:'dd-MM-YYYY':"+0000"}}</small></div>
+                    </div>
+                    <div class="col-3">
+                        Creado por: {{version.data.ver_creado_por | titlecase}}
+                    </div>
+                    <div class="col-3 flex-fill">
+                        Cat: {{version.data.categoria}}
+                    </div>
+                    <div class="col-3 animate__animated animate__fadeIn" *ngIf="acc.isExpanded('id_'+version.id)">
+                        Download • Try • Buy
+                    </div>
+                </div>
+            </button>
+        </ng-template>
+        <ng-template ngbPanelContent>
+            <div class="row">
+                <div class="col-8">
+                    Descripcion: {{version.data.descripcion}}
+                </div>
+                <div class="d-flex flex-col flex-col-reverse">
+                    <button mat-button mat-raised-button color="warn" class="align-right ml-auto"
+                        (click)="borrar(version.id)">
+                        <mat-icon> delete </mat-icon> Borrar
+                    </button>
+                    <button mat-button mat-raised-button color="accent" class="align-right ml-2"
+                        (click)="editar(version)">
+                        <mat-icon> create </mat-icon> Editar
+                    </button>
+                </div>
+            </div>
+        </ng-template>
+    </ngb-panel>
+</ngb-accordion>
+
+<ng-template #loading>
+    <div class="d-flex align-content-center flex-wrap">
+        <i class="fas fa-spinner fa-spin fa-3x" style="color: #007bff;"></i>
+    </div>
+</ng-template>

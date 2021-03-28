@@ -17,6 +17,7 @@ export class VersionHistoryComponent implements OnInit {
 
   selected = -1;
 
+
   constructor( private fbs: FirebaseService,
                private dialog: MatDialog
     ) { }
@@ -25,7 +26,7 @@ export class VersionHistoryComponent implements OnInit {
     this.fbs.getCollectionfb("version").subscribe(resp => {
       console.log(resp);
       this.versions = resp;
-      this.versions.sort()
+      this.versions.sort(function compare(a,b){return a.data.ver_release_date >= b.data.ver_release_date? -1 : 1;});
     })
   }
 
@@ -43,16 +44,6 @@ export class VersionHistoryComponent implements OnInit {
       console.log('The dialog was closed');
 
     });
-  }
-
-  expand(){}
-
-  borrar(id: string){
-    this.fbs.deleteCollectionFb('version', id)
-  }
-
-  editar(data: any){
-    this.openDialog(data);
   }
 
 }

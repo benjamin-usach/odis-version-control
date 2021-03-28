@@ -47,7 +47,7 @@ export class ModalComponent implements OnInit {
       this.editar = true;
 
       const date =  new Date(this.data.data.ver_release_date*1000 ).toISOString().slice(0,10);
-
+      console.log(date);
       this.versionForm.setValue({
         'categoria':          this.data.data.categoria,
         'descripcion':        this.data.data.descripcion,
@@ -63,9 +63,17 @@ export class ModalComponent implements OnInit {
   onSubmit(){
     const date = new Date(this.versionForm.get('ver_release_date')?.value).getTime() / 1000;
     this.versionForm.patchValue({'ver_release_date': Math.trunc(date)});
-    this.fb.postCollectionFb("version", this.versionForm.value);
-    Swal.fire("Versión creada con éxito!",'', "success")
+
+    if(!this.editar){
+      this.fb.postCollectionFb("version", this.versionForm.value);
+      Swal.fire("Versión creada con éxito!",'', "success")
+          .then(ok => this.dialogRef.close());
+    }
+    else{
+      this.fb.updateCollectionFB("version", this.data.id, this.versionForm);
+      Swal.fire("Actualización exitosa!", '', 'success')
         .then(ok => this.dialogRef.close());
+    }
   }
 
   cerrar(){

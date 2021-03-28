@@ -5,18 +5,19 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { MaterialModule } from '../material/material.module';
 import { ModalComponent } from './version-history/shared/modal/modal.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { AccordionComponent } from './version-history/shared/accordion/accordion.component';
 
 
 
 
 @NgModule({
-  declarations: [VersionHistoryComponent, ModalComponent],
+  declarations: [VersionHistoryComponent, ModalComponent, AccordionComponent],
   imports: [
     CommonModule,
     NgbModule,
     MaterialModule,
     FormsModule,
-    ReactiveFormsModule,
+    ReactiveFormsModule
   ],
   exports: [
     NgbModule
