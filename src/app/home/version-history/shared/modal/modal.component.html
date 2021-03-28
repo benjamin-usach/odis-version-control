@@ -45,11 +45,8 @@
           </div>
           <div class="row form-group">
             <label for="descripcion">Descripcion</label>
-            <input
-              type="text"
-              id="descripcion"
-              class="form-control"
-              formControlName="descripcion">
+            <ngx-editor-menu [editor]="editor" [toolbar]="toolbar"> </ngx-editor-menu>
+            <ngx-editor [editor]="editor"  formControlName="descripcion" style="width: 100%;"></ngx-editor>
           </div>
 
         </form>

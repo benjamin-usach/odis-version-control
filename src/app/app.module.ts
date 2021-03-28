@@ -15,6 +15,7 @@ import { AngularFireStorageModule } from '@angular/fire/storage';
 import { environment } from 'src/environments/environment';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgxPaginationModule } from 'ngx-pagination';
+import { NgxEditorModule } from 'ngx-editor';
 
 
 
@@ -35,7 +36,8 @@ import { NgxPaginationModule } from 'ngx-pagination';
     AngularFireMessagingModule,
     AngularFireStorageModule,
     BrowserAnimationsModule,
-    NgxPaginationModule
+    NgxPaginationModule,
+    NgxEditorModule
   ],
   providers: [],
   bootstrap: [AppComponent]

@@ -14,8 +14,9 @@ export class VersionHistoryComponent implements OnInit {
 
 
   versions: version[] = [];
+  filtrado: version[] = [];
 
-  selected = -1;
+  selected = "Todos";
 
 
   constructor( private fbs: FirebaseService,
@@ -44,6 +45,11 @@ export class VersionHistoryComponent implements OnInit {
       console.log('The dialog was closed');
 
     });
+  }
+
+  filtrar(){
+    this.filtrado = this.versions.filter( v => v.data.categoria === this.selected);
+
   }
 
 }

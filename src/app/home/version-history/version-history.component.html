@@ -7,7 +7,19 @@
         <h1 class="text-info">ODIS Version history</h1>
         <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Consequatur velit dignissimos, voluptas, beatae deleniti neque...</p>
         <br><br>
-        <app-accordion [versions] = "versions" ></app-accordion>
+        <div class="row p-3">
+          <div class="col-4">
+            <mat-label>Filtrar por:</mat-label>
+            <mat-select matNativeControl id="filtro" name="filtro" style="width: 80%" [(value)] = "selected" (valueChange)="filtrar()">
+              <mat-option value="Todos" selected>Todos</mat-option>
+              <mat-option value="Web">ODIS Web</mat-option>
+              <mat-option value="Mobil">Oca Mobil</mat-option>
+              <mat-option value="Beta">Beta</mat-option>
+            </mat-select>
+          </div>
+        </div>
+        <app-accordion *ngIf="selected === 'Todos'" [versions] = "versions" ></app-accordion>
+        <app-accordion *ngIf="selected !== 'Todos'" [versions] = "filtrado" ></app-accordion>
       </div>
       <div class="col-sm">
       </div>

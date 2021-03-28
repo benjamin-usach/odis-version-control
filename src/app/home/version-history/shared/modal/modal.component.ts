@@ -1,17 +1,30 @@
 import { stringify } from '@angular/compiler/src/util';
-import { Component, Inject, OnInit } from '@angular/core';
+import { Component, Inject, OnDestroy, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { version } from 'src/app/interfaces/version.interface';
 import { FirebaseService } from 'src/app/services/firebase.service';
 import Swal from 'sweetalert2';
+import { Editor, Toolbar } from 'ngx-editor';
+import { schema } from 'ngx-editor/schema';
+import { toHTML, toDoc } from 'ngx-editor';
+
 
 @Component({
   selector: 'app-modal',
   templateUrl: './modal.component.html',
   styleUrls: ['./modal.component.css']
 })
-export class ModalComponent implements OnInit {
+export class ModalComponent implements OnInit, OnDestroy {
+
+  html = '';
+  editor!: Editor;
+  toolbar: Toolbar = [
+    ['bold', 'italic'],
+    ['bullet_list'],
+    ['link'],
+  ];
+
 
   constructor(  private dialogRef: MatDialogRef<ModalComponent>,
                 private fb: FirebaseService,
@@ -42,6 +55,15 @@ export class ModalComponent implements OnInit {
   ngOnInit(): void {
 
     this.initForm();
+    this.editor = new Editor({
+      content: '',
+      plugins: [],
+      schema,
+      nodeViews: {},
+      history: true,
+      keyboardShortcuts: true,
+      inputRules: true,
+    });
 
     if(this.data.id){
       this.editar = true;
@@ -50,7 +72,7 @@ export class ModalComponent implements OnInit {
       console.log(date);
       this.versionForm.setValue({
         'categoria':          this.data.data.categoria,
-        'descripcion':        this.data.data.descripcion,
+        'descripcion':        toDoc(this.data.data.descripcion),
         'ver_creado_por':     this.data.data.ver_creado_por,
         'ver_release_date':   date,
         'ver_number':         this.data.data.ver_number
@@ -60,17 +82,23 @@ export class ModalComponent implements OnInit {
     console.log(this.editar)
   }
 
+  ngOnDestroy(): void {
+    this.editor.destroy();
+  }
+
   onSubmit(){
     const date = new Date(this.versionForm.get('ver_release_date')?.value).getTime() / 1000;
-    this.versionForm.patchValue({'ver_release_date': Math.trunc(date)});
+    this.versionForm.patchValue({'ver_release_date': Math.trunc(date), 'descripcion': toHTML(this.versionForm.value.descripcion)});
 
     if(!this.editar){
       this.fb.postCollectionFb("version", this.versionForm.value);
+      //console.log(this.versionForm.value);
+      console.log();
       Swal.fire("Versión creada con éxito!",'', "success")
           .then(ok => this.dialogRef.close());
     }
     else{
-      this.fb.updateCollectionFB("version", this.data.id, this.versionForm);
+      this.fb.updateCollectionFB("version", this.data.id, this.versionForm.value);
       Swal.fire("Actualización exitosa!", '', 'success')
         .then(ok => this.dialogRef.close());
     }
