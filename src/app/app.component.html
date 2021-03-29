@@ -3,7 +3,8 @@
     <a class="navbar-brand" [routerLink] = "['']"><i class="fas fa-history"></i>   ODIS Version History</a>
     <div>
       <form class="d-flex">
-        <button mat-button mat-raised-button color="primary" (click) = "setAdmin()"> Login </button>
+        <button mat-button mat-raised-button *ngIf="!admin" color="primary" (click) = "setAdmin()"> Login </button>
+        <button mat-button mat-raised-button *ngIf="admin" color="warn" (click)="unsetAdmin()"> Logout </button>
       </form>
     </div>
   </div>

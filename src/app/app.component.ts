@@ -9,16 +9,25 @@ import { FirebaseService } from './services/firebase.service';
 
 export class AppComponent{
   title = 'ODIS Version History';  
+  admin = false;
 
   constructor(
     private fb: FirebaseService
   ) {}
 
   ngOnInit(){
+    if(localStorage.getItem("admin") == "true"){
+      this.admin=true
+    }
+  
   }
 
   setAdmin(){
     localStorage.setItem("admin", "true");
+  }
+
+  unsetAdmin(){
+    localStorage.removeItem("admin");
   }
 
 }

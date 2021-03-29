@@ -12,6 +12,7 @@ import { ModalComponent } from './shared/modal/modal.component';
 })
 export class VersionHistoryComponent implements OnInit {
 
+  admin = false;
 
   versions: version[] = [];
   filtrado: version[] = [];
@@ -29,6 +30,10 @@ export class VersionHistoryComponent implements OnInit {
       this.versions = resp;
       this.versions.sort(function compare(a,b){return a.data.ver_release_date >= b.data.ver_release_date? -1 : 1;});
     })
+    if(localStorage.getItem("admin")){
+      this.admin = true;
+    }
+
   }
 
   show( p: any ){

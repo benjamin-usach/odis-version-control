@@ -11,12 +11,17 @@ import { ModalComponent } from '../modal/modal.component';
 })
 export class AccordionComponent implements OnInit {
 
+  admin = false;
+
   @Input() versions!: version[];
 
   constructor(private fbs: FirebaseService,
               private dialog: MatDialog) { }
 
   ngOnInit(): void {
+    if(localStorage.getItem("admin")){
+      this.admin=true;
+    }
   }
 
   borrar(id: string){

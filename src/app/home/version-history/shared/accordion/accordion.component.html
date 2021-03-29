@@ -5,16 +5,16 @@
                 <div class="d-flex flex-row pb-2 pt-2">
                     <div class="col-3 text-left">
                         <div class="row">
-                            <h5><strong>{{version.data.ver_number}} </strong></h5>
+                            <h4><strong>{{version.data.ver_number}} </strong></h4>
                         </div>
                         <div class="row"><small>{{version.data.ver_release_date * 1000 |
                                 date:'dd-MM-YYYY':"+0000"}}</small></div>
                     </div>
                     <div class="col-3">
-                        Creado por: {{version.data.ver_creado_por | titlecase}}
+                        <p *ngIf="admin">Creado por: {{version.data.ver_creado_por | titlecase}}</p>
                     </div>
-                    <div class="col-3 flex-fill">
-                        Cat: {{version.data.categoria}}
+                    <div class="col-3 flex-fill text-left">
+                        {{version.data.categoria}}
                     </div>
                     <div class="col-3 animate__animated animate__fadeIn" *ngIf="acc.isExpanded('id_'+version.id)">
                         Download • Try • Buy
@@ -27,7 +27,7 @@
                 <div class="col-8">
                     <div [innerHTML] ="version.data.descripcion"></div>
                 </div>
-                <div class="d-flex flex-col flex-col-reverse">
+                <div class="d-flex flex-col flex-col-reverse" *ngIf="admin">
                     <button mat-button mat-raised-button color="warn" class="align-right ml-auto"
                         (click)="borrar(version.id)">
                         <mat-icon> delete </mat-icon> Borrar
