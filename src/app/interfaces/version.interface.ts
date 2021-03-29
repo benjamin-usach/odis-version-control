@@ -5,7 +5,8 @@ export interface version{
         id: string;
         ver_creado_por: string;
         ver_number: string;
-        ver_release_date: number
+        ver_release_date: number;
+        files: any[];
     };
     id: string;
 

@@ -8,6 +8,7 @@ import Swal from 'sweetalert2';
 import { Editor, Toolbar } from 'ngx-editor';
 import { schema } from 'ngx-editor/schema';
 import { toHTML, toDoc } from 'ngx-editor';
+import { FileItem } from 'src/app/models/models';
 
 
 @Component({
@@ -25,6 +26,8 @@ export class ModalComponent implements OnInit, OnDestroy {
     ['link'],
   ];
 
+  tags: string[] = [];
+
 
   constructor(  private dialogRef: MatDialogRef<ModalComponent>,
                 private fb: FirebaseService,
@@ -37,7 +40,7 @@ export class ModalComponent implements OnInit, OnDestroy {
   //TODO: VALIDACIONES!!
   
   editar = false;
-  
+  archivos: any;
 
 
   private initForm(){
@@ -46,7 +49,9 @@ export class ModalComponent implements OnInit, OnDestroy {
       'descripcion':      new FormControl( null,    Validators.required),
       'ver_creado_por':   new FormControl( null,    Validators.required),
       'ver_release_date': new FormControl( null,    Validators.required),
-      'ver_number':       new FormControl( "0.0.0", Validators.required)
+      'ver_number':       new FormControl( "0.0.0", Validators.required),
+      'tags':             new FormControl( null,    Validators.required)
+//      'files':            new FormControl( [],      Validators.required)
     });
 
   }
@@ -75,7 +80,8 @@ export class ModalComponent implements OnInit, OnDestroy {
         'descripcion':        toDoc(this.data.data.descripcion),
         'ver_creado_por':     this.data.data.ver_creado_por,
         'ver_release_date':   date,
-        'ver_number':         this.data.data.ver_number
+        'ver_number':         this.data.data.ver_number,
+//        'files':              this.data.data.files
       });
     } 
 
@@ -86,19 +92,40 @@ export class ModalComponent implements OnInit, OnDestroy {
     this.editor.destroy();
   }
 
+
+/*   onFileSelected(event: any){
+    console.log(event.target.files);
+    this.archivos = event.target.files;
+    console.log(this.archivos)
+    let reader = new FileReader()
+
+    if(event.target.files && event.target.files.length) {
+      const [file] = event.target.files;
+      reader.readAsDataURL(file);
+
+      reader.onload = () => {
+        this.versionForm.patchValue({'files': reader.result});
+      }
+    };
+
+    console.log(this.versionForm.value);
+
+  } */
+
   onSubmit(){
     const date = new Date(this.versionForm.get('ver_release_date')?.value).getTime() / 1000;
     this.versionForm.patchValue({'ver_release_date': Math.trunc(date), 'descripcion': toHTML(this.versionForm.value.descripcion)});
 
+    var write = this.versionForm.value;
+    write['tags'] = this.tags
+
     if(!this.editar){
-      this.fb.postCollectionFb("version", this.versionForm.value);
-      //console.log(this.versionForm.value);
-      console.log();
+      this.fb.postCollectionFb("version", write);
       Swal.fire("Versión creada con éxito!",'', "success")
           .then(ok => this.dialogRef.close());
     }
     else{
-      this.fb.updateCollectionFB("version", this.data.id, this.versionForm.value);
+      this.fb.updateCollectionFB("version", this.data.id, write);
       Swal.fire("Actualización exitosa!", '', 'success')
         .then(ok => this.dialogRef.close());
     }
@@ -106,6 +133,21 @@ export class ModalComponent implements OnInit, OnDestroy {
 
   cerrar(){
     this.dialogRef.close();
+  }
+
+  addTag(tag: string){
+    this.tags.push(tag);
+    if(this.tags.length === 10){
+      this.versionForm.controls['tags'].disable();
+    }
+
+  }
+
+  removeTag(i: number){
+    this.tags.splice(i,1);
+    if(this.tags.length < 10){
+      this.versionForm.controls['tags'].enable();
+    }
   }
 
 }

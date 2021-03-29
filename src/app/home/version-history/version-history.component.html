@@ -17,6 +17,15 @@
               <mat-option value="Beta">Beta</mat-option>
             </mat-select>
           </div>
+          <div class="col-4">
+            <mat-form-field class="example-form-field">
+              <mat-label>
+                Buscar...
+              </mat-label>
+              <input type="text" matInput>
+            </mat-form-field>
+
+          </div>
         </div>
         <app-accordion *ngIf="selected === 'Todos'" [versions] = "versions" ></app-accordion>
         <app-accordion *ngIf="selected !== 'Todos'" [versions] = "filtrado" ></app-accordion>

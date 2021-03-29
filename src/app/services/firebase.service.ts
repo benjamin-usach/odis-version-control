@@ -3,7 +3,9 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { map } from 'rxjs/operators';
-
+import { AngularFireStorage } from '@angular/fire/storage'
+import { UploadMetadata } from '@angular/fire/storage/interfaces';
+ 
 @Injectable({
   providedIn: 'root'
 })
@@ -12,8 +14,8 @@ export class FirebaseService {
 
   constructor(
     private _afs: AngularFirestore,
-    
-    ) {}
+    private storage: AngularFireStorage
+  ) {}
 
 
   getCollectionfb(ruta: string): Observable<any> {
@@ -75,6 +77,10 @@ export class FirebaseService {
     .then(resp => console.log(resp))
     .catch(err => console.log(err));
 
+  }
+
+  saveFileFB(path: string, data: any, metadata?: UploadMetadata ){
+    this.storage.upload(path, data, metadata).then(resp => console.log(resp))
   }
 
 }

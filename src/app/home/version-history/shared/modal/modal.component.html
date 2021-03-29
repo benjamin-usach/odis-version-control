@@ -48,7 +48,46 @@
             <ngx-editor-menu [editor]="editor" [toolbar]="toolbar"> </ngx-editor-menu>
             <ngx-editor [editor]="editor"  formControlName="descripcion" style="width: 100%;"></ngx-editor>
           </div>
-
+          <div class="row form-group">
+            <label for="tags">Etiquetas</label>
+            <input #box
+              type="text"
+              id="tags"
+              class="form-control"
+              formControlName="tags"
+              (keyup.enter) = "addTag(box.value); box.value = ''"
+              >
+          </div>
+          <div class="row" *ngIf="tags.length === 10"> Ha ingresado el número máximo de etiquetas </div><br>
+          <div class="row animated FadeIn" *ngIf="tags.length > 0">
+            <mat-chip-list>
+              <mat-chip *ngFor="let tag of tags; let i = index;" color="primary" [removable] = "true" (removed) = "removeTag(i)">
+                <span>{{tag}}</span>
+                <mat-icon matChipRemove> highlight_off </mat-icon>
+              </mat-chip>
+            </mat-chip-list>
+            
+          </div>
+          <!--
+          <div class="row form-group">
+            <label for="files">Archivos</label>
+            <input hi type="file" accept="image/*" id="files" class="form-control" formControlName="files" (change) = "onFileSelected($event)" multiple/>
+            <div class="form-group col-md-12  animated fadeIn" *ngIf="archivos && archivos.length > 0">
+              <mat-chip-list>
+                <mat-chip *ngFor="let forFile of archivos; let i = index;" color="primary" [removable]="true">
+                  <span>{{ forFile.name }}</span>
+                  <span *ngIf="forFile.progreso &&  forFile.progreso > 0" style="margin-left: 6px; margin-right: 6px"><strong>{{forFile.progreso}}%</strong></span>
+                  <mat-icon matChipRemove *ngIf="!forFile.progreso">cancel</mat-icon>
+                  <mat-icon *ngIf="forFile.progreso &&  (forFile.progreso > 0 && 100 > forFile.progreso)">cloud_upload</mat-icon>
+                  <mat-icon matChipRemove *ngIf="forFile.progreso && forFile.progreso == 100">cancel</mat-icon>
+                  <div class="progress container-fluid">
+                    <div class="progress-bar" role="progressbar" [ngStyle]="{ 'width': forFile.progreso + '%' }"></div>
+                  </div>
+                </mat-chip>
+              </mat-chip-list>
+            </div>
+          </div>
+          -->
         </form>
       </div>
     </div>

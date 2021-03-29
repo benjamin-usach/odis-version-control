@@ -17,5 +17,8 @@ export class AppComponent{
   ngOnInit(){
   }
 
+  setAdmin(){
+    localStorage.setItem("admin", "true");
+  }
 
 }
