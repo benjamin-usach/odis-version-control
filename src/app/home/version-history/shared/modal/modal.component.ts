@@ -9,6 +9,7 @@ import { Editor, Toolbar } from 'ngx-editor';
 import { schema } from 'ngx-editor/schema';
 import { toHTML, toDoc } from 'ngx-editor';
 import { FileItem } from 'src/app/models/models';
+import { RxwebValidators } from '@rxweb/reactive-form-validators';
 
 
 @Component({
@@ -25,6 +26,8 @@ export class ModalComponent implements OnInit, OnDestroy {
     ['bullet_list'],
     ['link'],
   ];
+  editar = false;
+  archivos: FileItem[] = [];
 
   tags: string[] = [];
 
@@ -38,9 +41,7 @@ export class ModalComponent implements OnInit, OnDestroy {
   //ver_id_validator: RegExp = new RegExp('[0-9]{1,3}\.[0-9]{1,3}\.[0-9]');
 
   //TODO: VALIDACIONES!!
-  
-  editar = false;
-  archivos: FileItem[] = [];
+
 
 
   private initForm(){
@@ -51,7 +52,7 @@ export class ModalComponent implements OnInit, OnDestroy {
       'ver_release_date': new FormControl( null,    Validators.required),
       'ver_number':       new FormControl( "0.0.0", Validators.required),
       'tags':             new FormControl( null,    Validators.required),
-      'files':            new FormControl( [],      Validators.required)
+      'files':            new FormControl( [],      [RxwebValidators.file({maxFiles: 8})])
     });
 
   }
@@ -72,16 +73,17 @@ export class ModalComponent implements OnInit, OnDestroy {
 
     if(this.data.id){
       this.editar = true;
-
-      const date =  new Date(this.data.data.ver_release_date*1000 ).toISOString().slice(0,10);
+      this.tags = this.data.tags? this.data.tags : [];
+      const date =  new Date(this.data.ver_release_date*1000 ).toISOString().slice(0,10);
       console.log(date);
       this.versionForm.setValue({
-        'categoria':          this.data.data.categoria,
-        'descripcion':        toDoc(this.data.data.descripcion),
-        'ver_creado_por':     this.data.data.ver_creado_por,
+        'categoria':          this.data.categoria,
+        'descripcion':        toDoc(this.data.descripcion),
+        'ver_creado_por':     this.data.ver_creado_por,
         'ver_release_date':   date,
-        'ver_number':         this.data.data.ver_number,
-//        'files':              this.data.data.files
+        'ver_number':         this.data.ver_number,
+        'tags':               '',
+        'files':              []
       });
     } 
 
@@ -122,13 +124,27 @@ export class ModalComponent implements OnInit, OnDestroy {
 
   onSubmit(){
     const date = new Date(this.versionForm.get('ver_release_date')?.value).getTime() / 1000;
+    const actual = new Date().getTime() / 1000;
+    console.log("hora actual: ", actual);
     this.versionForm.patchValue({'ver_release_date': Math.trunc(date), 'descripcion': toHTML(this.versionForm.value.descripcion)});
 
     var write = this.versionForm.value;
     write['tags'] = this.tags
 
     if(!this.editar){
-      this.fb.postCollectionFb("version", write);
+      write['has_files'] = this.archivos.length > 0? true : false;
+      const that = this;
+      this.fb.postCollectionFb("version", write)
+        .then(
+          function(resp){
+            const docID = resp.id; 
+            console.log(docID);
+            that.fb.cargarImagenesFirebase(that.archivos, `version/${docID}/files`, actual, docID);
+          }
+        )
+        .catch(err=> console.log(err));
+      
+      
       Swal.fire("Versión creada con éxito!",'', "success")
           .then(ok => this.dialogRef.close());
     }
@@ -148,7 +164,6 @@ export class ModalComponent implements OnInit, OnDestroy {
     if(this.tags.length === 10){
       this.versionForm.controls['tags'].disable();
     }
-
   }
 
   removeTag(i: number){
@@ -157,5 +172,4 @@ export class ModalComponent implements OnInit, OnDestroy {
       this.versionForm.controls['tags'].enable();
     }
   }
-
 }

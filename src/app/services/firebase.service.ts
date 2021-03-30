@@ -26,9 +26,9 @@ export class FirebaseService {
     return documentCollection.snapshotChanges().pipe(
       map(actions =>
         actions.map(a => {
-          const data = a.payload.doc.data();
+          const data: any = a.payload.doc.data();
           const id = a.payload.doc.id;
-          return { id, data };
+          return { id, ...data };
         })
       )
     )
@@ -44,13 +44,10 @@ export class FirebaseService {
    */
 
 
-  postCollectionFb( ruta: string, objeto: Object ): void {
+  postCollectionFb( ruta: string, objeto: Object ): Promise<any> {
     
-    this._afs.collection(ruta).add(objeto)
-      .then(
-        resp => console.log("post answer:", resp.parent.id)
-      )
-      .catch(err=> console.log(err))
+      return this._afs.collection(ruta).add(objeto);
+      
   }
 
   /**

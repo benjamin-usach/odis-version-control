@@ -7,6 +7,7 @@ import { ModalComponent } from './version-history/shared/modal/modal.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AccordionComponent } from './version-history/shared/accordion/accordion.component';
 import { NgxEditorModule } from 'ngx-editor';
+import { RxReactiveFormsModule  } from '@rxweb/reactive-form-validators';
 
 
 
@@ -18,6 +19,7 @@ import { NgxEditorModule } from 'ngx-editor';
     MaterialModule,
     FormsModule,
     ReactiveFormsModule,
+    RxReactiveFormsModule,
     NgxEditorModule,
     NgxEditorModule.forRoot({
       locals: {
