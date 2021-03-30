@@ -40,7 +40,7 @@ export class ModalComponent implements OnInit, OnDestroy {
   //TODO: VALIDACIONES!!
   
   editar = false;
-  archivos: any;
+  archivos: FileItem[] = [];
 
 
   private initForm(){
@@ -50,8 +50,8 @@ export class ModalComponent implements OnInit, OnDestroy {
       'ver_creado_por':   new FormControl( null,    Validators.required),
       'ver_release_date': new FormControl( null,    Validators.required),
       'ver_number':       new FormControl( "0.0.0", Validators.required),
-      'tags':             new FormControl( null,    Validators.required)
-//      'files':            new FormControl( [],      Validators.required)
+      'tags':             new FormControl( null,    Validators.required),
+      'files':            new FormControl( [],      Validators.required)
     });
 
   }
@@ -93,24 +93,32 @@ export class ModalComponent implements OnInit, OnDestroy {
   }
 
 
-/*   onFileSelected(event: any){
+   onFileSelected(event: any){
     console.log(event.target.files);
-    this.archivos = event.target.files;
     console.log(this.archivos)
-    let reader = new FileReader()
+    
+    //Pasar a base 64
+    // let reader = new FileReader()
 
-    if(event.target.files && event.target.files.length) {
-      const [file] = event.target.files;
-      reader.readAsDataURL(file);
+    // if(event.target.files && event.target.files.length) {
+    //   const [file] = event.target.files;
+    //   reader.readAsDataURL(file);
 
-      reader.onload = () => {
-        this.versionForm.patchValue({'files': reader.result});
-      }
-    };
+    //   reader.onload = () => {
+    //     this.versionForm.patchValue({'files': reader.result});
+    //   }
+    // };
 
-    console.log(this.versionForm.value);
+    // console.log(this.versionForm.value);
 
-  } */
+    for(const propiedad in Object.getOwnPropertyNames(event.target.files)){
+      const temp = event.target.files[propiedad];
+      const nuevoArchivo = new FileItem(temp);
+      this.archivos.push(nuevoArchivo);      
+    }
+    console.log(this.archivos);
+
+  }
 
   onSubmit(){
     const date = new Date(this.versionForm.get('ver_release_date')?.value).getTime() / 1000;

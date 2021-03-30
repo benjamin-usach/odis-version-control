@@ -22,7 +22,7 @@
               <mat-label>
                 Buscar...
               </mat-label>
-              <input type="text" matInput>
+              <input #box type="text" matInput (keyup.enter)="buscarTag(box.value)">
             </mat-form-field>
 
           </div>

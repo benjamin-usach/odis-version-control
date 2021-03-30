@@ -68,14 +68,14 @@
             </mat-chip-list>
             
           </div>
-          <!--
+          <!--  SUBIR ARCHIVOS    -->
           <div class="row form-group">
             <label for="files">Archivos</label>
             <input hi type="file" accept="image/*" id="files" class="form-control" formControlName="files" (change) = "onFileSelected($event)" multiple/>
             <div class="form-group col-md-12  animated fadeIn" *ngIf="archivos && archivos.length > 0">
               <mat-chip-list>
                 <mat-chip *ngFor="let forFile of archivos; let i = index;" color="primary" [removable]="true">
-                  <span>{{ forFile.name }}</span>
+                  <span>{{ forFile.nombreArchivo }}</span>
                   <span *ngIf="forFile.progreso &&  forFile.progreso > 0" style="margin-left: 6px; margin-right: 6px"><strong>{{forFile.progreso}}%</strong></span>
                   <mat-icon matChipRemove *ngIf="!forFile.progreso">cancel</mat-icon>
                   <mat-icon *ngIf="forFile.progreso &&  (forFile.progreso > 0 && 100 > forFile.progreso)">cloud_upload</mat-icon>
@@ -87,7 +87,7 @@
               </mat-chip-list>
             </div>
           </div>
-          -->
+          <!--  subir archivos end   -->
         </form>
       </div>
     </div>

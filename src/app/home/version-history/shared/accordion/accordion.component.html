@@ -37,6 +37,7 @@
                         <mat-icon> create </mat-icon> Editar
                     </button>
                 </div>
+                <mat-chip-list><mat-chip *ngFor="let tag of version.data.tags" color="primary"> {{tag}} </mat-chip> </mat-chip-list>
             </div>
         </ng-template>
     </ngb-panel>

@@ -19,7 +19,6 @@ export class VersionHistoryComponent implements OnInit {
 
   selected = "Todos";
 
-
   constructor( private fbs: FirebaseService,
                private dialog: MatDialog
     ) { }
@@ -55,6 +54,11 @@ export class VersionHistoryComponent implements OnInit {
   filtrar(){
     this.filtrado = this.versions.filter( v => v.data.categoria === this.selected);
 
+  }
+
+  buscarTag(event: any){
+    this.filtrado = this.versions.filter(v => v.data.tags?.includes(event));
+    console.log(this.filtrado);
   }
 
 }
