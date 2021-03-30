@@ -29,29 +29,28 @@ export class VersionHistoryComponent implements OnInit {
     const that = this;
     this.fbs.getCollectionfb("categoria").subscribe(res => that.cats = res);
     
-    this.fbs.getCollectionfb("version").subscribe(resp => {
+    let ver = this.fbs.getCollectionfb("version").subscribe(resp => {
       this.versions = resp;
-      for(var i = 0; i < this.versions.length; i++){
-        this.versions[i].noHtml = this.versions[i].descripcion.replace(/<[^>]*>/g, ' ');
-        let tempVer: version= this.versions[i];
-        if(this.versions[i]['has_files']){
-          this.fbs.getCollectionfb(`version/${this.versions[i].id}/files`).subscribe(resp =>{
-            console.log("temp: ", tempVer);
-            if(resp && resp.length > 0){
-              console.log("files?: ", resp);
-              tempVer.archivos = resp;
-              this.versions[i] = tempVer;
-              console.log(this.versions[i]);
+      this.versions.sort(function compare(a,b){return a.ver_release_date >= b.ver_release_date? -1 : 1;});
+      for(let j = 0; j < this.versions.length; j++){
+        this.versions[j].noHtml = this.versions[j].descripcion.replace(/<[^>]*>/g, ' ');
+        let tempVer: version= this.versions[j];
+        if(this.versions[j]['has_files']){
+          this.fbs.getCollectionfb(`version/${this.versions[j].id}/files`).subscribe(res =>{
+            //Aqui tiene un bug 
+            if(res && res.length > 0){
+              tempVer.archivos = res;
+              this.versions[j] = tempVer;
             }
             else{console.log("no tiene archivos")}
           });
         }
       }
-      this.versions.sort(function compare(a,b){return a.ver_release_date >= b.ver_release_date? -1 : 1;});
     })
     if(localStorage.getItem("admin")){
       this.admin = true;
     }
+    console.log(this.versions);
   }
 
   show( p: any ){

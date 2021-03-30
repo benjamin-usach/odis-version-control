@@ -87,7 +87,7 @@ export class ModalComponent implements OnInit, OnDestroy {
         'ver_number':         this.data[0].ver_number,
         'tags':               '',
         'files':              [],
-        'beta':               this.data[0].beta
+        'beta':               this.data[0].beta? this.data[0].beta : false
       });
     } 
 
@@ -151,7 +151,25 @@ export class ModalComponent implements OnInit, OnDestroy {
       
       Swal.fire("Versión creada con éxito!",'', "success")
           .then(ok => this.dialogRef.close());
-    }
+      
+      Swal.fire({
+        title: '¿Desea notificar la nueva versión por correo?',
+        showDenyButton: true,
+        confirmButtonText: `Si`,
+        denyButtonText: `No`,
+        customClass: {
+          confirmButton: 'order-1 right-gap',
+          denyButton: 'order-3',
+        }
+      }).then((result) => {
+        if (result.isConfirmed) {
+          Swal.fire('Agregar modal para enviar correo!', '', 'success').then(ok=>this.dialogRef.close());
+        } else if (result.isDenied) {
+          Swal.fire('Version registrada exitosamente', '', 'success').then(ok => this.dialogRef.close());
+        }
+      })
+
+     }
     else{
       this.fb.updateCollectionFB("version", this.data[0].id, write);
       Swal.fire("Actualización exitosa!", '', 'success')

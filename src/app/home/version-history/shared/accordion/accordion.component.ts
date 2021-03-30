@@ -23,7 +23,9 @@ export class AccordionComponent implements OnInit {
     if(localStorage.getItem("admin")){
       this.admin=true;
     }
+    console.log(this.versions);
     this.fbs.getCollectionfb("categoria").subscribe(v => this.cats = v);
+    
   }
 
   borrar(id: string){
@@ -32,7 +34,7 @@ export class AccordionComponent implements OnInit {
 
   openDialog(data: object = {}): void {
     const dialogRef = this.dialog.open(ModalComponent, {
-      width: '500px',
+      width: '800px',
       disableClose:true,
       data: [data, this.cats]
     });
