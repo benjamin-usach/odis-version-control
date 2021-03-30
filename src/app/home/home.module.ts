@@ -8,16 +8,19 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AccordionComponent } from './version-history/shared/accordion/accordion.component';
 import { NgxEditorModule } from 'ngx-editor';
 import { RxReactiveFormsModule  } from '@rxweb/reactive-form-validators';
+import { NgSelectModule } from '@ng-select/ng-select';
+import { VersionPipe } from './pipes/version.pipe';
 
 
 
 @NgModule({
-  declarations: [VersionHistoryComponent, ModalComponent, AccordionComponent],
+  declarations: [VersionHistoryComponent, ModalComponent, AccordionComponent, VersionPipe],
   imports: [
     CommonModule,
     NgbModule,
     MaterialModule,
     FormsModule,
+    NgSelectModule,
     ReactiveFormsModule,
     RxReactiveFormsModule,
     NgxEditorModule,

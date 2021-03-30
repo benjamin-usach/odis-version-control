@@ -25,6 +25,7 @@
     "@angular/router": "~11.2.5",
     "@firebase/firestore": "^2.2.0",
     "@ng-bootstrap/ng-bootstrap": "^9.1.0",
+    "@ng-select/ng-select": "^6.1.0",
     "@rxweb/reactive-form-validators": "^2.1.2",
     "angularfire2": "^5.4.2",
     "bootstrap": "^4.5.0",

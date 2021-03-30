@@ -22,13 +22,16 @@
               <mat-label>
                 Buscar...
               </mat-label>
-              <input #box type="text" matInput (keyup.enter)="buscarTag(box.value)">
+              <input #box type="text" matInput (keyup.enter)="buscar(box.value)" (input) = "revisarCaja(box.value)">
+              <button mat-button *ngIf="box.value" matSuffix mat-icon-button aria-label="Clear" (click)="box.value=''; filtro = false">
+                <mat-icon>close</mat-icon>
+              </button>
             </mat-form-field>
 
           </div>
         </div>
-        <app-accordion *ngIf="selected === 'Todos'" [versions] = "versions" ></app-accordion>
-        <app-accordion *ngIf="selected !== 'Todos'" [versions] = "filtrado" ></app-accordion>
+        <app-accordion *ngIf="selected === 'Todos' && !filtro" [versions] = "versions" ></app-accordion>
+        <app-accordion *ngIf="filtro" [versions] = "filtrado" ></app-accordion>
       </div>
       <div class="col-sm">
       </div>

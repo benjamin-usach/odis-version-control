@@ -21,11 +21,11 @@
           </div>
           <div class="row form-group">
             <label for="categoria">Categoria</label>
-            <input
-              type="text"
-              id="categoria"
-              class="form-control"
-              formControlName="categoria">
+              <ng-select [items] = "cats" bindLabel = "nombre" bindValue="id" formControlName='categoria' style="width: 100%;margin: auto;">
+             </ng-select>
+          </div>
+          <div class="row form-group">
+              <mat-slide-toggle color="primary" formControlName = 'beta'> Beta version </mat-slide-toggle>
           </div>
           <div class="row form-group">
             <label for="ver_creado_por ">Autor</label>

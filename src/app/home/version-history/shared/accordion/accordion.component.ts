@@ -1,6 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { version } from 'src/app/interfaces/version.interface';
+import { categorias, version } from 'src/app/interfaces/version.interface';
 import { FirebaseService } from 'src/app/services/firebase.service';
 import { ModalComponent } from '../modal/modal.component';
 
@@ -12,6 +12,7 @@ import { ModalComponent } from '../modal/modal.component';
 export class AccordionComponent implements OnInit {
 
   admin = false;
+  cats: categorias[] = [];
 
   @Input() versions!: version[];
 
@@ -22,6 +23,7 @@ export class AccordionComponent implements OnInit {
     if(localStorage.getItem("admin")){
       this.admin=true;
     }
+    this.fbs.getCollectionfb("categoria").subscribe(v => this.cats = v);
   }
 
   borrar(id: string){
@@ -32,7 +34,7 @@ export class AccordionComponent implements OnInit {
     const dialogRef = this.dialog.open(ModalComponent, {
       width: '500px',
       disableClose:true,
-      data: data
+      data: [data, this.cats]
     });
     dialogRef.afterClosed().subscribe(result => {
       console.log('The dialog was closed');

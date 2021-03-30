@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { version } from 'src/app/interfaces/version.interface';
+import { categorias, version } from 'src/app/interfaces/version.interface';
 import { FirebaseService } from 'src/app/services/firebase.service';
 import { ModalComponent } from './shared/modal/modal.component';
 
@@ -16,6 +16,8 @@ export class VersionHistoryComponent implements OnInit {
 
   versions: version[] = [];
   filtrado: version[] = [];
+  filtro = false;
+  cats: categorias[] = [];
 
   selected = "Todos";
 
@@ -25,9 +27,10 @@ export class VersionHistoryComponent implements OnInit {
 
   ngOnInit(): void {
     const that = this;
+    this.fbs.getCollectionfb("categoria").subscribe(res => that.cats = res);
+    
     this.fbs.getCollectionfb("version").subscribe(resp => {
       this.versions = resp;
-      //this.versions.filter((res: any) => res.nohtml === res.descripcion);
       for(var i = 0; i < this.versions.length; i++){
         this.versions[i].noHtml = this.versions[i].descripcion.replace(/<[^>]*>/g, ' ');
         let tempVer: version= this.versions[i];
@@ -49,7 +52,6 @@ export class VersionHistoryComponent implements OnInit {
     if(localStorage.getItem("admin")){
       this.admin = true;
     }
-
   }
 
   show( p: any ){
@@ -60,7 +62,7 @@ export class VersionHistoryComponent implements OnInit {
     const dialogRef = this.dialog.open(ModalComponent, {
       width: '800px',
       disableClose:true,
-      data: data
+      data: [data, this.cats]
     });
     dialogRef.afterClosed().subscribe(result => {
       console.log('The dialog was closed');
@@ -70,12 +72,18 @@ export class VersionHistoryComponent implements OnInit {
 
   filtrar(){
     this.filtrado = this.versions.filter( v => v.categoria === this.selected);
-
+    this.filtro = true;
   }
 
-  buscarTag(event: any){
-    this.filtrado = this.versions.filter(v => v.tags?.includes(event));
-    console.log(this.filtrado);
+  buscar(termino: string){
+    if(termino === '') return;
+    console.log("BUSCA")
+    this.filtrado = this.versions.filter(v => v.tags?.includes(termino));
+    this.filtro = true;
+  }
+
+  revisarCaja(value: string){
+    if(value === '') this.filtro = false;
   }
 
 }

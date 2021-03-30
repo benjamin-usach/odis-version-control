@@ -2,7 +2,7 @@ import { stringify } from '@angular/compiler/src/util';
 import { Component, Inject, OnDestroy, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { version } from 'src/app/interfaces/version.interface';
+import { categorias, version } from 'src/app/interfaces/version.interface';
 import { FirebaseService } from 'src/app/services/firebase.service';
 import Swal from 'sweetalert2';
 import { Editor, Toolbar } from 'ngx-editor';
@@ -34,8 +34,10 @@ export class ModalComponent implements OnInit, OnDestroy {
 
   constructor(  private dialogRef: MatDialogRef<ModalComponent>,
                 private fb: FirebaseService,
-                @Inject(MAT_DIALOG_DATA) public data:version
+                @Inject(MAT_DIALOG_DATA) public data: any[]
     ) { }
+
+  cats: categorias[] = this.data[1];
 
   versionForm!: FormGroup;
   //ver_id_validator: RegExp = new RegExp('[0-9]{1,3}\.[0-9]{1,3}\.[0-9]');
@@ -52,7 +54,8 @@ export class ModalComponent implements OnInit, OnDestroy {
       'ver_release_date': new FormControl( null,    Validators.required),
       'ver_number':       new FormControl( "0.0.0", Validators.required),
       'tags':             new FormControl( null,    Validators.required),
-      'files':            new FormControl( [],      [RxwebValidators.file({maxFiles: 8})])
+      'files':            new FormControl( [],      [RxwebValidators.file({maxFiles: 8})]),
+      'beta':             new FormControl( false,   [] )
     });
 
   }
@@ -71,19 +74,20 @@ export class ModalComponent implements OnInit, OnDestroy {
       inputRules: true,
     });
 
-    if(this.data.id){
+    if(this.data[0].id){
       this.editar = true;
-      this.tags = this.data.tags? this.data.tags : [];
-      const date =  new Date(this.data.ver_release_date*1000 ).toISOString().slice(0,10);
+      this.tags = this.data[0].tags? this.data[0].tags : [];
+      const date =  new Date(this.data[0].ver_release_date*1000 ).toISOString().slice(0,10);
       console.log(date);
       this.versionForm.setValue({
-        'categoria':          this.data.categoria,
-        'descripcion':        toDoc(this.data.descripcion),
-        'ver_creado_por':     this.data.ver_creado_por,
+        'categoria':          this.data[0].categoria,
+        'descripcion':        toDoc(this.data[0].descripcion),
+        'ver_creado_por':     this.data[0].ver_creado_por,
         'ver_release_date':   date,
-        'ver_number':         this.data.ver_number,
+        'ver_number':         this.data[0].ver_number,
         'tags':               '',
-        'files':              []
+        'files':              [],
+        'beta':               this.data[0].beta
       });
     } 
 
@@ -149,7 +153,7 @@ export class ModalComponent implements OnInit, OnDestroy {
           .then(ok => this.dialogRef.close());
     }
     else{
-      this.fb.updateCollectionFB("version", this.data.id, write);
+      this.fb.updateCollectionFB("version", this.data[0].id, write);
       Swal.fire("Actualización exitosa!", '', 'success')
         .then(ok => this.dialogRef.close());
     }
