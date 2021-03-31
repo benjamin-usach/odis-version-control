@@ -75,15 +75,31 @@
           <br>
           <!--  SUBIR ARCHIVOS    -->
           <div class="row form-group">
-            <label for="files">Archivos</label>
-            <input hi type="file" accept="image/*" id="files" class="form-control" formControlName="files" (change) = "onFileSelected($event)" multiple/>
+            <label for="imagenes">Cargar imágenes</label>
+            <input hi type="file" accept="image/*" id="imagenes" class="form-control" formControlName="imagenes" (change) = "onImageSelected($event)" multiple/>
+            <div class="form-group col-md-12  animated fadeIn" *ngIf="imagenes && imagenes.length > 0">
+              <mat-chip-list>
+                <mat-chip *ngFor="let forFile of imagenes; let i = index;" color="primary" [removable]="true" class="mx-3">
+                  <span>{{ forFile.nombreArchivo }}</span>
+                  <span *ngIf="forFile.progreso &&  forFile.progreso > 0" style="margin-left: 6px; margin-right: 6px"><strong>{{forFile.progreso}}%</strong></span>
+                  <mat-icon matChipRemove *ngIf="!forFile.progreso">cancel</mat-icon>
+                  <mat-icon *ngIf="forFile.progreso &&  (forFile.progreso > 0 && 100 > forFile.progreso)" style="color: #007bff;">cloud_upload</mat-icon>
+                  <mat-icon matChipRemove *ngIf="forFile.progreso && forFile.progreso == 100">cancel</mat-icon>
+                  <i *ngIf="forFile.estaSubiendo" class="fas fa-sm fa-sync-alt fa-spin" style="color: #007bff;"></i>
+                </mat-chip>
+              </mat-chip-list>
+            </div>
+          </div>
+          <div class="row form-group">
+            <label for="archivos">Cargar documentación</label>
+            <input hi type="file" accept=".xlsx,.xls,.doc, .docx,.ppt, .pptx,.txt,.pdf" id="archivos" class="form-control" formControlName="archivos" (change) = "onFileSelected($event)" multiple/>
             <div class="form-group col-md-12  animated fadeIn" *ngIf="archivos && archivos.length > 0">
               <mat-chip-list>
                 <mat-chip *ngFor="let forFile of archivos; let i = index;" color="primary" [removable]="true" class="mx-3">
                   <span>{{ forFile.nombreArchivo }}</span>
                   <span *ngIf="forFile.progreso &&  forFile.progreso > 0" style="margin-left: 6px; margin-right: 6px"><strong>{{forFile.progreso}}%</strong></span>
                   <mat-icon matChipRemove *ngIf="!forFile.progreso">cancel</mat-icon>
-                  <mat-icon *ngIf="forFile.progreso &&  (forFile.progreso > 0 && 100 > forFile.progreso)" style="color: #007bff;">cloud_upload</mat-icon>
+                  <mat-icon *ngIf="forFile.progreso &&  (forFile.progreso > 0 && 100 > forFile.progreso)" style="color:    007bff;">cloud_upload</mat-icon>
                   <mat-icon matChipRemove *ngIf="forFile.progreso && forFile.progreso == 100">cancel</mat-icon>
                   <i *ngIf="forFile.estaSubiendo" class="fas fa-sm fa-sync-alt fa-spin" style="color: #007bff;"></i>
                 </mat-chip>

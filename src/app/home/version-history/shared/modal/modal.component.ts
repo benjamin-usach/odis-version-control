@@ -28,6 +28,7 @@ export class ModalComponent implements OnInit, OnDestroy {
     ['link'],
   ];
   editar = false;
+  imagenes: FileItem[] = [];
   archivos: FileItem[] = [];
 
   tags: string[] = [];
@@ -55,7 +56,8 @@ export class ModalComponent implements OnInit, OnDestroy {
       'ver_release_date': new FormControl( null,    Validators.required),
       'ver_number':       new FormControl( "0.0.0", Validators.required),
       'tags':             new FormControl( null,    Validators.required),
-      'files':            new FormControl( [],      [RxwebValidators.file({maxFiles: 8})]),
+      'imagenes':            new FormControl( [],      [RxwebValidators.file({maxFiles: 8})]),
+      'archivos':            new FormControl( [],      [RxwebValidators.file({maxFiles: 8})]),
       'beta':             new FormControl( false,   [] )
     });
 
@@ -87,7 +89,8 @@ export class ModalComponent implements OnInit, OnDestroy {
         'ver_release_date':   date,
         'ver_number':         this.data[0].ver_number,
         'tags':               '',
-        'files':              [],
+        'imagenes':           [],
+        'archivos':           [],
         'beta':               this.data[0].beta? this.data[0].beta : false
       });
     } 
@@ -100,24 +103,21 @@ export class ModalComponent implements OnInit, OnDestroy {
   }
 
 
-   onFileSelected(event: any){
+   onImageSelected(event: any){
     console.log(event.target.files);
-    console.log(this.archivos)
-    
-    //Pasar a base 64
-    // let reader = new FileReader()
+    console.log(this.imagenes)
+    for(const propiedad in Object.getOwnPropertyNames(event.target.files)){
+      const temp = event.target.files[propiedad];
+      const nuevoArchivo = new FileItem(temp);
+      this.imagenes.push(nuevoArchivo);      
+    }
+    console.log(this.imagenes);
 
-    // if(event.target.files && event.target.files.length) {
-    //   const [file] = event.target.files;
-    //   reader.readAsDataURL(file);
+  }
 
-    //   reader.onload = () => {
-    //     this.versionForm.patchValue({'files': reader.result});
-    //   }
-    // };
-
-    // console.log(this.versionForm.value);
-
+  onFileSelected(event: any){
+    console.log(event.target.files);
+    console.log(this.imagenes)
     for(const propiedad in Object.getOwnPropertyNames(event.target.files)){
       const temp = event.target.files[propiedad];
       const nuevoArchivo = new FileItem(temp);
@@ -137,20 +137,26 @@ export class ModalComponent implements OnInit, OnDestroy {
     write['tags'] = this.tags
 
     if(!this.editar){
-      write['has_files'] = this.archivos.length > 0? true : false;
-      const that = this;
-      if(write.has_files){
-        this.fb.postCollectionFb("version", write)
-          .then(
-            function(resp){
-              const docID = resp.id; 
-              console.log(docID);
-              that.fb.cargarImagenesFirebase(that.archivos, `version/${docID}/files`, actual, docID);
-            }
-          )
-          .catch(err=> console.log(err));
-      }
+      write['has_files'] = this.imagenes.length > 0? true : this.archivos.length > 0? true : false;
+      write['has_image'] = this.imagenes.length > 0? true : false;
+      write['has_doc']   = this.archivos.length > 0? true : false;
       
+      const that = this;
+
+      this.fb.postCollectionFb("version", write)
+        .then(
+          function(resp){
+            const docID = resp.id; 
+            console.log(docID);
+            if(write.has_image)that.fb.cargarImagenesFirebase(that.imagenes, `version/${docID}/files/image/image/`, actual, docID);
+            if(write.has_doc) that.fb.cargarImagenesFirebase(that.archivos, `version/${docID}/files/docs/docs/`, actual, docID);
+          }
+        )
+        .catch(err=> console.log(err));
+      
+      
+      console.log(write);
+
       Swal.fire("Versión creada con éxito!",'', "success")
           .then(ok => this.dialogRef.close());
       
@@ -173,10 +179,10 @@ export class ModalComponent implements OnInit, OnDestroy {
 
     }
     else{
-      if(!write.has_files && this.archivos.length > 0){
-        write['has_files'] = this.archivos.length > 0? true : false;
+      if(!write.has_files && this.imagenes.length > 0){
+        write['has_files'] = this.imagenes.length > 0? true : false;
         const that = this;
-        that.fb.cargarImagenesFirebase(that.archivos, `version/${this.data[0].id}/files`, actual, this.data[0].id);
+        that.fb.cargarImagenesFirebase(that.imagenes, `version/${this.data[0].id}/files`, actual, this.data[0].id);
       }
       this.fb.updateCollectionFB("version", this.data[0].id, write);
       Swal.fire("Actualización exitosa!", '', 'success')
