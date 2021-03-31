@@ -138,16 +138,17 @@ export class ModalComponent implements OnInit, OnDestroy {
     if(!this.editar){
       write['has_files'] = this.archivos.length > 0? true : false;
       const that = this;
-      this.fb.postCollectionFb("version", write)
-        .then(
-          function(resp){
-            const docID = resp.id; 
-            console.log(docID);
-            that.fb.cargarImagenesFirebase(that.archivos, `version/${docID}/files`, actual, docID);
-          }
-        )
-        .catch(err=> console.log(err));
-      
+      if(write.has_files){
+        this.fb.postCollectionFb("version", write)
+          .then(
+            function(resp){
+              const docID = resp.id; 
+              console.log(docID);
+              that.fb.cargarImagenesFirebase(that.archivos, `version/${docID}/files`, actual, docID);
+            }
+          )
+          .catch(err=> console.log(err));
+      }
       
       Swal.fire("Versión creada con éxito!",'', "success")
           .then(ok => this.dialogRef.close());
@@ -169,8 +170,13 @@ export class ModalComponent implements OnInit, OnDestroy {
         }
       })
 
-     }
+    }
     else{
+      if(!write.has_files && this.archivos.length > 0){
+        write['has_files'] = this.archivos.length > 0? true : false;
+        const that = this;
+        that.fb.cargarImagenesFirebase(that.archivos, `version/${this.data[0].id}/files`, actual, this.data[0].id);
+      }
       this.fb.updateCollectionFB("version", this.data[0].id, write);
       Swal.fire("Actualización exitosa!", '', 'success')
         .then(ok => this.dialogRef.close());
