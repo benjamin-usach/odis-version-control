@@ -55,7 +55,11 @@
               id="tags"
               class="form-control"
               formControlName="tags"
-              (keyup.enter) = "addTag(box.value); box.value = ''"
+              (keyup.enter) = "addTag(box.value, tagTooltip); box.value = ''"
+              matTooltip="Presione enter para agregar la etiqueta"
+              [matTooltipHideDelay] = "3000" 
+              [matTooltipPosition]="'above'"
+              #tagTooltip = "matTooltip"
               >
           </div>
           <div class="row" *ngIf="tags.length === 10"> Ha ingresado el número máximo de etiquetas </div><br>
@@ -75,15 +79,13 @@
             <input hi type="file" accept="image/*" id="files" class="form-control" formControlName="files" (change) = "onFileSelected($event)" multiple/>
             <div class="form-group col-md-12  animated fadeIn" *ngIf="archivos && archivos.length > 0">
               <mat-chip-list>
-                <mat-chip *ngFor="let forFile of archivos; let i = index;" color="primary" [removable]="true">
+                <mat-chip *ngFor="let forFile of archivos; let i = index;" color="primary" [removable]="true" class="mx-3">
                   <span>{{ forFile.nombreArchivo }}</span>
                   <span *ngIf="forFile.progreso &&  forFile.progreso > 0" style="margin-left: 6px; margin-right: 6px"><strong>{{forFile.progreso}}%</strong></span>
                   <mat-icon matChipRemove *ngIf="!forFile.progreso">cancel</mat-icon>
                   <mat-icon *ngIf="forFile.progreso &&  (forFile.progreso > 0 && 100 > forFile.progreso)">cloud_upload</mat-icon>
                   <mat-icon matChipRemove *ngIf="forFile.progreso && forFile.progreso == 100">cancel</mat-icon>
-                  <div class="progress container-fluid">
-                    <div class="progress-bar" role="progressbar" [ngStyle]="{ 'width': forFile.progreso + '%' }"></div>
-                  </div>
+                  <i *ngIf="forFile.estaSubiendo" class="fas fa-sm fa-sync-alt fa-spin" style="color: #007bff;"></i>
                 </mat-chip>
               </mat-chip-list>
             </div>

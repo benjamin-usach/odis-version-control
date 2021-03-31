@@ -82,8 +82,8 @@ export class VersionHistoryComponent implements OnInit {
   buscar(termino: string){
     if(termino === '') return;
     this.filtrado = this.versions.filter(function(v){
-      if(v.tags?.includes(termino)){return true}
-      else if(v.noHtml?.includes(termino)){return true}
+      if(v.tags?.map(v => v.toLowerCase()).includes(termino.toLowerCase())){return true}
+      else if(v.noHtml?.toLowerCase().includes(termino.toLowerCase())){return true}
       else{return false}
     });
     this.filtro = true;

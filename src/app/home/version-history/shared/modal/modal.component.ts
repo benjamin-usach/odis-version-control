@@ -1,5 +1,5 @@
 import { stringify } from '@angular/compiler/src/util';
-import { Component, Inject, OnDestroy, OnInit } from '@angular/core';
+import { Component, Inject, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { categorias, version } from 'src/app/interfaces/version.interface';
@@ -10,6 +10,7 @@ import { schema } from 'ngx-editor/schema';
 import { toHTML, toDoc } from 'ngx-editor';
 import { FileItem } from 'src/app/models/models';
 import { RxwebValidators } from '@rxweb/reactive-form-validators';
+import { MatTooltip } from '@angular/material/tooltip';
 
 
 @Component({
@@ -132,7 +133,7 @@ export class ModalComponent implements OnInit, OnDestroy {
     console.log("hora actual: ", actual);
     this.versionForm.patchValue({'ver_release_date': Math.trunc(date), 'descripcion': toHTML(this.versionForm.value.descripcion)});
 
-    var write = this.versionForm.value;
+    let write = this.versionForm.value;
     write['tags'] = this.tags
 
     if(!this.editar){
@@ -186,8 +187,16 @@ export class ModalComponent implements OnInit, OnDestroy {
   cerrar(){
     this.dialogRef.close();
   }
-
-  addTag(tag: string){
+  
+  addTag(tag: string, tagTooltip: MatTooltip){
+    if(tag.trim() === ''){ return }
+    if(this.tags.includes(tag)){
+      tagTooltip.message = "Etiqueta ya existe!";
+      tagTooltip.show();
+      setTimeout(() => { tagTooltip.message = "Presione enter para agregar la etiqueta" }, 2000);
+      
+      return
+    }
     this.tags.push(tag);
     if(this.tags.length === 10){
       this.versionForm.controls['tags'].disable();

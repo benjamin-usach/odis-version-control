@@ -2,21 +2,19 @@
     <ngb-panel *ngFor="let version of versions" id="id_{{version.id}}">
         <ng-template ngbPanelHeader class="cardClass" style="width: 100%;">
             <button ngbPanelToggle style="width: 100%; padding: 0; border: none; background: none;">
-                <div class="d-flex flex-row pb-2 pt-2">
-                    <div class="col-3 text-left">
-                        <div class="row">
-                            <h4><strong>{{version.ver_number}} </strong></h4>
-                        </div>
-                        <div class="row"><small>{{version.ver_release_date * 1000 |
-                                date:'dd-MM-YYYY':"+0000"}}</small></div>
+                <div class="row">
+                    <div class="col-md-3 text-left">
+                        <h4><strong>{{version.ver_number}} </strong></h4>
+                        <small class="mb-2">{{version.ver_release_date * 1000 |
+                                date:'dd-MM-YYYY':"+0000"}}</small>
                     </div>
-                    <div class="col-3">
+                    <div class="col-md-3 text-left">
                         <p *ngIf="admin">Creado por: {{version.ver_creado_por | titlecase}}</p>
                     </div>
-                    <div class="col-3 flex-fill text-left">
+                    <div class="col-md-3 flex-fill text-left">
                         {{ version.categoria | version:cats | titlecase}}
                     </div>
-                    <div class="col-3 animate__animated animate__fadeIn" *ngIf="acc.isExpanded('id_'+version.id)">
+                    <div class="col-md-3 animate__animated animate__fadeIn" *ngIf="acc.isExpanded('id_'+version.id)">
                         Download • Try • Buy
                         <div class="d-flex flex-col flex-col-reverse" *ngIf="admin">
                             <button mat-button mat-raised-button color="warn" class="align-right ml-auto"

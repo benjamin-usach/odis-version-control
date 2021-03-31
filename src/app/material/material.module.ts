@@ -18,7 +18,8 @@ import {MatDialogModule} from '@angular/material/dialog';
 import {MatPaginatorModule} from '@angular/material/paginator';
 import {MatChipsModule} from '@angular/material/chips';
 import {MatSlideToggleModule} from '@angular/material/slide-toggle';
-
+import {MatTooltipModule} from '@angular/material/tooltip';
+import {MatProgressBarModule} from '@angular/material/progress-bar';
 
 @NgModule({
   exports: [
@@ -39,7 +40,9 @@ import {MatSlideToggleModule} from '@angular/material/slide-toggle';
     MatDialogModule,
     MatPaginatorModule,
     MatChipsModule,
-    MatSlideToggleModule
+    MatSlideToggleModule,
+    MatTooltipModule,
+    MatProgressBarModule
   ]
 })
 export class MaterialModule { }
