@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { categorias, version } from 'src/app/interfaces/version.interface';
 import { FirebaseService } from 'src/app/services/firebase.service';
+import Swal from 'sweetalert2';
 import { ModalComponent } from './shared/modal/modal.component';
 
 
@@ -69,20 +70,41 @@ export class VersionHistoryComponent implements OnInit {
     });
   }
 
-  filtrar(){
+  filtrar(value: string){
+    if(value === "Todos"){
+      this.filtro = false;
+      return;
+    }
     this.filtrado = this.versions.filter( v => v.categoria === this.selected);
     this.filtro = true;
   }
 
   buscar(termino: string){
     if(termino === '') return;
-    console.log("BUSCA")
-    this.filtrado = this.versions.filter(v => v.tags?.includes(termino));
+    this.filtrado = this.versions.filter(function(v){
+      if(v.tags?.includes(termino)){return true}
+      else if(v.noHtml?.includes(termino)){return true}
+      else{return false}
+    });
     this.filtro = true;
   }
 
   revisarCaja(value: string){
     if(value === '') this.filtro = false;
+  }
+
+  swalSub(){
+    Swal.fire({
+      title: "Ingrese su correo para suscribirse a nuestras actualizaciones:",
+      html: `<input type="text" id="newEmail" class="swal2-input" placeholder="Ingrese su correo aquí">`,
+      confirmButtonText: "Suscibirse",
+      icon: "question",
+    }).then((result) =>{
+      if(result.isConfirmed){
+        Swal.fire("Lo mantendremos informado", '', 'success')
+      }}
+    );
+
   }
 
 }

@@ -10,11 +10,9 @@
         <div class="row p-3">
           <div class="col-4">
             <mat-label>Filtrar por:</mat-label>
-            <mat-select matNativeControl id="filtro" name="filtro" style="width: 80%" [(value)] = "selected" (valueChange)="filtrar()">
+            <mat-select #select matNativeControl id="filtro" name="filtro" style="width: 80%" [(value)] = "selected" (valueChange)="filtrar(select.value)">
               <mat-option value="Todos" selected>Todos</mat-option>
-              <mat-option value="Web">ODIS Web</mat-option>
-              <mat-option value="Mobil">Oca Mobil</mat-option>
-              <mat-option value="Beta">Beta</mat-option>
+              <mat-option *ngFor="let cat of cats" value="{{cat.id}}" selected>{{cat.nombre | titlecase}}</mat-option>
             </mat-select>
           </div>
           <div class="col-4">
@@ -29,6 +27,10 @@
             </mat-form-field>
 
           </div>
+          <div class="col-4">
+            <button *ngIf="admin" mat-button mat-raised-button color="primary" class="mt-2"  style="margin: auto; display: block;" (click)="openDialog()">Crear nueva versión <mat-icon>add</mat-icon></button>
+            <button *ngIf="!admin" mat-button mat-raised-button color="primary" class="mt-2" style="margin: auto; display: block;" (click)="swalSub()">Suscribirse</button>
+          </div>
         </div>
         <app-accordion *ngIf="selected === 'Todos' && !filtro" [versions] = "versions" ></app-accordion>
         <app-accordion *ngIf="filtro" [versions] = "filtrado" ></app-accordion>
@@ -39,4 +41,3 @@
   
 </div>
 
-<button *ngIf="admin" type="button" class="btn btn-primary btn-lg sticky-bottom rounded-circle float-right m-3" style= "position: -webkit-sticky; position: sticky; bottom: 1%; float: right;" (click)="openDialog()"><i class="fas fa-plus"></i></button>
