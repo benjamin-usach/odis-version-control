@@ -83,7 +83,7 @@
                   <span>{{ forFile.nombreArchivo }}</span>
                   <span *ngIf="forFile.progreso &&  forFile.progreso > 0" style="margin-left: 6px; margin-right: 6px"><strong>{{forFile.progreso}}%</strong></span>
                   <mat-icon matChipRemove *ngIf="!forFile.progreso">cancel</mat-icon>
-                  <mat-icon *ngIf="forFile.progreso &&  (forFile.progreso > 0 && 100 > forFile.progreso)">cloud_upload</mat-icon>
+                  <mat-icon *ngIf="forFile.progreso &&  (forFile.progreso > 0 && 100 > forFile.progreso)" style="color: #007bff;">cloud_upload</mat-icon>
                   <mat-icon matChipRemove *ngIf="forFile.progreso && forFile.progreso == 100">cancel</mat-icon>
                   <i *ngIf="forFile.estaSubiendo" class="fas fa-sm fa-sync-alt fa-spin" style="color: #007bff;"></i>
                 </mat-chip>

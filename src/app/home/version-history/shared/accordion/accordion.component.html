@@ -35,12 +35,12 @@
                 <div class="row">
                     <div [innerHTML] ="version.descripcion"></div>
                 </div>
-                <div *ngIf="version.has_files" class="row align-content-center" style="width:80%; margin:auto;">
-                    <ngb-carousel>
-                        <ng-template ngbSlide *ngFor="let img of version.archivos">
-                            <img src="{{img.url}}" style="height: 50%; margin-left: auto; margin-right: auto; display: block;">
-                        </ng-template>
-                    </ngb-carousel> 
+                <div *ngIf="version.has_files" class="row align-content-center" style="margin:auto;">
+                    <mat-grid-list cols="5" rowHeight="2:1">
+                        <mat-grid-tile ngbSlide *ngFor="let img of version.archivos">
+                            <img src="{{img.url}}"  style="height: 80%; display: block;cursor: pointer; border-radius: 2px;" (click)="acc.collapse('id_'+version.id)">
+                        </mat-grid-tile>
+                    </mat-grid-list> 
                 </div><br><br>
                 <mat-chip-list><mat-chip *ngFor="let tag of version.tags" color="primary"> {{tag}} </mat-chip> </mat-chip-list>
             </div>
