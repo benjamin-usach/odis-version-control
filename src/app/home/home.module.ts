@@ -11,11 +11,13 @@ import { RxReactiveFormsModule  } from '@rxweb/reactive-form-validators';
 import { NgSelectModule } from '@ng-select/ng-select';
 import { VersionPipe } from './pipes/version.pipe';
 import { CarouselComponent } from './version-history/shared/carousel/carousel.component';
+import { MailerComponent } from './version-history/shared/mailer/mailer.component';
+
 
 
 
 @NgModule({
-  declarations: [VersionHistoryComponent, ModalComponent, AccordionComponent, VersionPipe, CarouselComponent],
+  declarations: [VersionHistoryComponent, ModalComponent, AccordionComponent, VersionPipe, CarouselComponent, MailerComponent],
   imports: [
     CommonModule,
     NgbModule,

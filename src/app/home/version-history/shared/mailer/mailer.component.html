@@ -1,0 +1,42 @@
+<button type="button" class="close" (click)="cerrar()">
+    <mat-icon class="mat-icon-close">close</mat-icon>
+</button>
+<h2 mat-dialog-title>Enviar correo de notificación</h2>
+<mat-dialog-content class="mat-typography" style="height:80%;">
+    <div class="row">
+        <div class="col-12 pb-3">
+            <h5>Seleccione las listas de correo:</h5>
+            <ng-select [items] = "lists" [multiple] = true [selectableGroup]="true" [closeOnSelect]="false" bindLabel = "nombre" bindValue="list" [(ngModel)]="preview" (change) = "actualizarLista()">
+                <ng-template ng-optgroup-tmp let-item="item" let-item$="item$" let-index="index">
+                    <input id="item-{{index}}" type="checkbox" [ngModel]="item$.selected"/> {{item.nombre | uppercase}}
+                </ng-template>
+                <ng-template ng-option-tmp let-item="item" let-item$="item$" let-index="index">
+                    <input id="item-{{index}}" type="checkbox" [ngModel]="item$.selected"/> {{item.nombre}}
+                </ng-template>
+            </ng-select>
+        </div>
+        <div class="col-12">
+            <mat-accordion>
+                <mat-expansion-panel>
+                    <mat-expansion-panel-header>
+                    <mat-panel-title>
+                        Correos seleccionados ({{to.length}})
+                        </mat-panel-title>
+                    <mat-panel-description>
+                        <mat-icon>account_circle</mat-icon>
+                    </mat-panel-description>
+                    </mat-expansion-panel-header>
+                    <div style="max-height: 80px; overflow-x:auto; overflow-y: hidden;">
+                        <ul>
+                            <li *ngFor="let correo of to">{{correo}}</li>
+                        </ul>
+                    </div>
+                </mat-expansion-panel>
+            </mat-accordion>
+        </div>
+    </div>
+</mat-dialog-content>
+<mat-dialog-actions align="center">
+    <button mat-stroked-button (click) = "mail()" [disabled] = "to.length === 0"> Enviar </button>
+    <button mat-stroked-button color="primary" (click)="cerrar()    ">cancelar</button>
+</mat-dialog-actions>

@@ -20,6 +20,7 @@ import {MatChipsModule} from '@angular/material/chips';
 import {MatSlideToggleModule} from '@angular/material/slide-toggle';
 import {MatTooltipModule} from '@angular/material/tooltip';
 import {MatProgressBarModule} from '@angular/material/progress-bar';
+import {MatTableModule} from '@angular/material/table';
 
 @NgModule({
   exports: [
@@ -42,7 +43,8 @@ import {MatProgressBarModule} from '@angular/material/progress-bar';
     MatChipsModule,
     MatSlideToggleModule,
     MatTooltipModule,
-    MatProgressBarModule
+    MatProgressBarModule,
+    MatTableModule
   ]
 })
 export class MaterialModule { }

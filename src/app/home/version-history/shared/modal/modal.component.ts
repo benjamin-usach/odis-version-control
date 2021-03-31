@@ -1,7 +1,7 @@
 import { stringify } from '@angular/compiler/src/util';
 import { Component, Inject, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { categorias, version } from 'src/app/interfaces/version.interface';
 import { FirebaseService } from 'src/app/services/firebase.service';
 import Swal from 'sweetalert2';
@@ -11,6 +11,7 @@ import { toHTML, toDoc } from 'ngx-editor';
 import { FileItem } from 'src/app/models/models';
 import { RxwebValidators } from '@rxweb/reactive-form-validators';
 import { MatTooltip } from '@angular/material/tooltip';
+import { MailerComponent } from '../mailer/mailer.component';
 
 
 @Component({
@@ -35,6 +36,7 @@ export class ModalComponent implements OnInit, OnDestroy {
 
 
   constructor(  private dialogRef: MatDialogRef<ModalComponent>,
+                private dialog: MatDialog,
                 private fb: FirebaseService,
                 @Inject(MAT_DIALOG_DATA) public data: any[]
     ) { }
@@ -171,7 +173,12 @@ export class ModalComponent implements OnInit, OnDestroy {
         }
       }).then((result) => {
         if (result.isConfirmed) {
-          Swal.fire('Agregar modal para enviar correo!', '', 'success').then(ok=>this.dialogRef.close());
+          this.dialogRef.close();
+          this.dialog.open(MailerComponent,{
+            width: '80%',
+            height: '50vh',
+            disableClose:true
+          })
         } else if (result.isDenied) {
           Swal.fire('Version registrada exitosamente', '', 'success').then(ok => this.dialogRef.close());
         }
@@ -192,6 +199,11 @@ export class ModalComponent implements OnInit, OnDestroy {
 
   cerrar(){
     this.dialogRef.close();
+    this.dialog.open(MailerComponent,{
+      height: '80vh',
+      width: '60%',
+      disableClose:true
+    })
   }
   
   addTag(tag: string, tagTooltip: MatTooltip){

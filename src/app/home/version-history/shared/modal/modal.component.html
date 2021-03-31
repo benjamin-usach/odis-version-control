@@ -9,9 +9,9 @@
 <div class="mat-app-background">
   <div class="card-body">
     <div class="mat-dialog-content">
-      <div class="col">
+      <div class="row">
         <form autocomplete="off" [formGroup]="versionForm">
-          <div class="row form-group">
+          <div class="col-12 form-group">
             <label for="ver_number">Version ID</label>
             <input
               type="text"
@@ -19,15 +19,15 @@
               class="form-control"
               formControlName="ver_number">
           </div>
-          <div class="row form-group">
+          <div class="col-12 form-group">
             <label for="categoria">Categoria</label>
               <ng-select [items] = "cats" bindLabel = "nombre" bindValue="id" formControlName='categoria' style="width: 100%;margin: auto;">
              </ng-select>
           </div>
-          <div class="row form-group">
+          <div class="col-12 form-group">
               <mat-slide-toggle color="primary" formControlName = 'beta'> Beta version </mat-slide-toggle>
           </div>
-          <div class="row form-group">
+          <div class="col-12 form-group">
             <label for="ver_creado_por ">Autor</label>
             <input
               type="text"
@@ -35,7 +35,7 @@
               class="form-control"
               formControlName="ver_creado_por">
           </div>
-          <div class="row form-group">
+          <div class="col-12 form-group">
             <label for="ver_release_date">Fecha de creación</label>
             <input
               type="date"
@@ -43,12 +43,12 @@
               class="form-control"
               formControlName="ver_release_date">
           </div>
-          <div class="row form-group">
+          <div class="col-12 form-group">
             <label for="descripcion">Descripcion</label>
             <ngx-editor-menu [editor]="editor" [toolbar]="toolbar"> </ngx-editor-menu>
             <ngx-editor [editor]="editor"  formControlName="descripcion" style="width: 100%;"></ngx-editor>
           </div>
-          <div class="row form-group">
+          <div class="col-12 form-group">
             <label for="tags">Etiquetas</label>
             <input #box
               type="text"
@@ -62,7 +62,7 @@
               #tagTooltip = "matTooltip"
               >
           </div>
-          <div class="row" *ngIf="tags.length === 10"> Ha ingresado el número máximo de etiquetas </div><br>
+          <div class="col-12" *ngIf="tags.length === 10"> Ha ingresado el número máximo de etiquetas </div><br>
           <div class="row animated FadeIn" *ngIf="tags.length > 0">
             <mat-chip-list>
               <mat-chip *ngFor="let tag of tags; let i = index;" color="primary" [removable] = "true" (removed) = "removeTag(i)">
@@ -74,7 +74,7 @@
           </div>
           <br>
           <!--  SUBIR ARCHIVOS    -->
-          <div class="row form-group">
+          <div class="col-12 form-group">
             <label for="imagenes">Cargar imágenes</label>
             <input hi type="file" accept="image/*" id="imagenes" class="form-control" formControlName="imagenes" (change) = "onImageSelected($event)" multiple/>
             <div class="form-group col-md-12  animated fadeIn" *ngIf="imagenes && imagenes.length > 0">
@@ -90,10 +90,21 @@
               </mat-chip-list>
             </div>
           </div>
-          <div class="row form-group">
+          <div class="col-12 form-group">
             <label for="archivos">Cargar documentación</label>
             <input hi type="file" accept=".xlsx,.xls,.doc, .docx,.ppt, .pptx,.txt,.pdf" id="archivos" class="form-control" formControlName="archivos" (change) = "onFileSelected($event)" multiple/>
-            <div class="form-group col-md-12  animated fadeIn" *ngIf="archivos && archivos.length > 0">
+            <br>
+            <table mat-table *ngIf="archivos.length > 0" [dataSource]="archivos" class="mat-elevation-z8">
+              <ng-container matColumnDef="nombreArchivo">
+                <th mat-header-cell *matHeaderCellDef> Nombre </th>
+                <td mat-cell *matCellDef="let element"> {{element.nombreArchivo}} </td>
+              </ng-container>
+              <tr mat-header-row *matHeaderRowDef="['nombreArchivo']"></tr>
+              <tr mat-row *matRowDef="let row; columns: ['nombreArchivo'];"></tr>
+            </table>
+            <br><br>
+            
+            <div class="form-group col-md-12  animated fadeIn" *ngIf="archivos && archivos.length > 0">              
               <mat-chip-list>
                 <mat-chip *ngFor="let forFile of archivos; let i = index;" color="primary" [removable]="true" class="mx-3">
                   <span>{{ forFile.nombreArchivo }}</span>

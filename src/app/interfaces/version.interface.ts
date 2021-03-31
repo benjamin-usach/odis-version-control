@@ -28,3 +28,10 @@ export interface categorias {
     id: string;
     nombre: string;
 }
+
+export interface MailList {
+    id: string;
+    nombre: string;
+    list: string[];
+}
+

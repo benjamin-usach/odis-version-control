@@ -56,7 +56,7 @@ export class AccordionComponent implements OnInit {
     this.dialog.open(CarouselComponent,{
       width: '100%',
       height: '60vw',
-      data: [imagenes, id, version_id]
+      data: [imagenes, id, version_id],
     });
 
   }
