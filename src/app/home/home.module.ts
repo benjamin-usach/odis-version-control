@@ -10,11 +10,12 @@ import { NgxEditorModule } from 'ngx-editor';
 import { RxReactiveFormsModule  } from '@rxweb/reactive-form-validators';
 import { NgSelectModule } from '@ng-select/ng-select';
 import { VersionPipe } from './pipes/version.pipe';
+import { CarouselComponent } from './version-history/shared/carousel/carousel.component';
 
 
 
 @NgModule({
-  declarations: [VersionHistoryComponent, ModalComponent, AccordionComponent, VersionPipe],
+  declarations: [VersionHistoryComponent, ModalComponent, AccordionComponent, VersionPipe, CarouselComponent],
   imports: [
     CommonModule,
     NgbModule,

@@ -1,0 +1,5 @@
+<ngb-carousel [activeId]="active" style="height: 80%; margin-top: 10%;">
+    <ng-template ngbSlide *ngFor="let img of images" id = "id_{{img.id}}">
+        <img src="{{img.url}}" style="width: 100%; margin: auto; display: block;">
+    </ng-template>
+</ngb-carousel> 

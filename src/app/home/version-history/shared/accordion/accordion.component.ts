@@ -2,6 +2,7 @@ import { Component, Input, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { categorias, version } from 'src/app/interfaces/version.interface';
 import { FirebaseService } from 'src/app/services/firebase.service';
+import { CarouselComponent } from '../carousel/carousel.component';
 import { ModalComponent } from '../modal/modal.component';
 
 @Component({
@@ -33,6 +34,7 @@ export class AccordionComponent implements OnInit {
   }
 
   openDialog(data: object = {}): void {
+    console.log(data);
     const dialogRef = this.dialog.open(ModalComponent, {
       width: '800px',
       disableClose:true,
@@ -47,6 +49,15 @@ export class AccordionComponent implements OnInit {
 
   editar(data: any){
     this.openDialog(data);
+  }
+
+  modalImagenes(imagenes: any[], id: string){
+    console.log('image ID:',id)
+    const dialogRef = this.dialog.open(CarouselComponent,{
+      width: '80%',
+      data: [imagenes, id]
+    });
+
   }
 
 }
