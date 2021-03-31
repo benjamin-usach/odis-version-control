@@ -148,8 +148,8 @@ export class ModalComponent implements OnInit, OnDestroy {
           function(resp){
             const docID = resp.id; 
             console.log(docID);
-            if(write.has_image)that.fb.cargarImagenesFirebase(that.imagenes, `version/${docID}/files/image/image/`, actual, docID);
-            if(write.has_doc) that.fb.cargarImagenesFirebase(that.archivos, `version/${docID}/files/docs/docs/`, actual, docID);
+            if(write.has_image)that.fb.cargarImagenesFirebase(that.imagenes, `version/${docID}/image/`, actual, docID);
+            if(write.has_doc) that.fb.cargarImagenesFirebase(that.archivos, `version/${docID}/docs/`, actual, docID);
           }
         )
         .catch(err=> console.log(err));

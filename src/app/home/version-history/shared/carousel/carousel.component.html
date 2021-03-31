@@ -1,5 +1,9 @@
-<ngb-carousel [activeId]="active" style="height: 80%; margin-top: 10%;">
+<div class="row">
+    <h1> {{version}} </h1>
+</div>
+<h1></h1>
+<ngb-carousel [activeId]="active" style="max-height: 80%; width: 100%" [showNavigationIndicators]="false">
     <ng-template ngbSlide *ngFor="let img of images" id = "id_{{img.id}}">
-        <img src="{{img.url}}" style="width: 100%; margin: auto; display: block;">
+        <img src="{{img.url}}" style="width: 100%; margin: auto;">
     </ng-template>
 </ngb-carousel> 

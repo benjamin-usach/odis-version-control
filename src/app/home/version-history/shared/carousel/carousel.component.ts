@@ -10,6 +10,7 @@ export class CarouselComponent implements OnInit {
 
   images:any = [];
   active = '';
+  version = '';
 
   constructor(
     public dialogRef: MatDialogRef<CarouselComponent>,
@@ -18,6 +19,7 @@ export class CarouselComponent implements OnInit {
   ngOnInit(): void {
     this.images = this.data[0]
     this.active = `id_${this.data[1]}`
+    this.version = this.data[2];
     console.log(this.active);
   }
 

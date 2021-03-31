@@ -51,11 +51,12 @@ export class AccordionComponent implements OnInit {
     this.openDialog(data);
   }
 
-  modalImagenes(imagenes: any[], id: string){
+  modalImagenes(imagenes: any[], id: string, version_id: string){
     console.log('image ID:',id)
-    const dialogRef = this.dialog.open(CarouselComponent,{
-      width: '80%',
-      data: [imagenes, id]
+    this.dialog.open(CarouselComponent,{
+      width: '100%',
+      height: '60vw',
+      data: [imagenes, id, version_id]
     });
 
   }

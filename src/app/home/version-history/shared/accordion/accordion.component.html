@@ -38,7 +38,7 @@
                 <div *ngIf="version.has_files" class="row align-content-center" style="margin:auto;">
                     <mat-grid-list cols="5" rowHeight="2:1">
                         <mat-grid-tile ngbSlide *ngFor="let img of version.archivos">
-                            <img src="{{img.url}}" class="zoom" style="height: 80%; display: block;cursor: pointer; border-radius: 2px;" (click)="modalImagenes(version.archivos, img.id)">
+                            <img src="{{img.url}}" class="zoom" style="height: 80%; display: block;cursor: pointer; border-radius: 2px;" (click)="modalImagenes(version.archivos, img.id, version.ver_number)">
                         </mat-grid-tile>
                     </mat-grid-list> 
                 </div><br><br>
