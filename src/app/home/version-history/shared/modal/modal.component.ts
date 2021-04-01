@@ -81,7 +81,11 @@ export class ModalComponent implements OnInit, OnDestroy {
 
     if(this.data[0].id){
       this.editar = true;
+      const that = this;
       this.tags = this.data[0].tags? this.data[0].tags : [];
+      if(this.data[0].has_image) this.imagenes = this.data[0].imagenes.map(function(x: any){ console.log(x);return that.fbToFile(x)});
+      if(this.data[0].has_doc) this.archivos = this.data[0].archivos.map(function(x: any){ console.log(x); return that.fbToFile(x)});
+      console.log(this.archivos, this.imagenes);
       const date =  new Date(this.data[0].ver_release_date*1000 ).toISOString().slice(0,10);
       console.log(date);
       this.versionForm.setValue({
@@ -91,8 +95,8 @@ export class ModalComponent implements OnInit, OnDestroy {
         'ver_release_date':   date,
         'ver_number':         this.data[0].ver_number,
         'tags':               '',
-        'imagenes':           [],
-        'archivos':           [],
+        'imagenes':           this.data[0].imagenes,
+        'archivos':           this.data[0].archivos,
         'beta':               this.data[0].beta? this.data[0].beta : false
       });
     } 
@@ -104,6 +108,17 @@ export class ModalComponent implements OnInit, OnDestroy {
     this.editor.destroy();
   }
 
+
+  fbToFile(file: any): any{
+    return {
+      archivo: file,
+      estaSubiendo: false,
+      nombreArchivo: file.nombre,
+      progreso: 0,
+      type: file.type
+    }
+
+  }
 
    onImageSelected(event: any){
     console.log(event.target.files);

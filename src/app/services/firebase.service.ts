@@ -206,5 +206,41 @@ export class FirebaseService {
       });
   }
 
+  /**
+   * 
+   * @param id: id documento 
+   * @param table: nombre de la tabla
+   * @param nom: nombre del archivo
+   * @param ruta: ruta firebase (docs || images)
+   */
+
+
+  deleteFile(id: string, table: string, nom:string, ruta:string) {
+
+    const that=this;
+    
+    this._afs.collection(table).get().subscribe(caseFiles => {
+      if (caseFiles.size > 0) {
+        // console.log(caseFiles);
+        
+        caseFiles.forEach(doc => {
+          const cfiles: any = doc.data();
+          cfiles.id = doc.id;
+          console.log(id);
+          const storageRef = firebase.storage().ref();
+          storageRef
+            .child(table + '/' + cfiles.id + ruta + nom)
+            .delete()
+            .then(function () {
+              that._afs.doc(table + '/' +  cfiles.id + ruta + id).delete();
+            })
+            .catch(function (error) {
+              console.error('Uh-oh, an error occurred!: files order', error);
+            });
+        });
+      }
+    });
+  }
+
 
 }
