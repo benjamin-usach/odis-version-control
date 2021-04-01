@@ -242,4 +242,32 @@ export class ModalComponent implements OnInit, OnDestroy {
       this.versionForm.controls['tags'].enable();
     }
   }
+
+  /**
+   * 
+   * @param type 1: archivo, 0: foto 
+   * @param index indice del elemento a borrar
+   */
+
+  removeFile(type: number, index: number){
+    if(this.editar){
+      
+      if(type === 0){
+        const aux: any = this.imagenes[index].archivo;
+        this.fb.deleteFile(aux.id, 'version', aux.nombre, 'image');
+        this.imagenes.splice(index, 1);
+      }
+      if(type === 1){
+        const aux: any = this.archivos[index].archivo;
+        this.fb.deleteFile(aux.id, 'version', aux.nombre, 'docs');
+        this.archivos.splice(index, 1);
+      }
+    }
+    else{
+      if(type === 0) this.imagenes.splice(index, 1);
+      if(type === 1) this.archivos.splice(index, 1);
+    };
+
+  }
+
 }

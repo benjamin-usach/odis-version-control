@@ -82,7 +82,7 @@
                 <mat-chip *ngFor="let forFile of imagenes; let i = index;" color="primary"  [removable]="true" class="mx-3">
                   <span>{{ forFile.nombreArchivo }}</span>
                   <span *ngIf="forFile.progreso &&  forFile.progreso > 0" style="margin-left: 6px; margin-right: 6px"><strong>{{forFile.progreso}}%</strong></span>
-                  <mat-icon matChipRemove *ngIf="!forFile.progreso">cancel</mat-icon>
+                  <mat-icon matChipRemove *ngIf="!forFile.progreso" (click) = "removeFile(0, i)">cancel</mat-icon>
                   <mat-icon *ngIf="forFile.progreso &&  (forFile.progreso > 0 && 100 > forFile.progreso)" style="color: #007bff;">cloud_upload</mat-icon>
                   <mat-icon matChipRemove *ngIf="forFile.progreso && forFile.progreso == 100">cancel</mat-icon>
                   <i *ngIf="forFile.estaSubiendo" class="fas fa-sm fa-sync-alt fa-spin" style="color: #007bff;"></i>
@@ -109,7 +109,7 @@
                 <mat-chip *ngFor="let forFile of archivos; let i = index;" color="primary" [removable]="true" class="mx-3">
                   <span>{{ forFile.nombreArchivo }}</span>
                   <span *ngIf="forFile.progreso &&  forFile.progreso > 0" style="margin-left: 6px; margin-right: 6px"><strong>{{forFile.progreso}}%</strong></span>
-                  <mat-icon matChipRemove *ngIf="!forFile.progreso">cancel</mat-icon>
+                  <mat-icon matChipRemove *ngIf="!forFile.progreso" (click) = "removeFile(1, i)">cancel</mat-icon>
                   <mat-icon *ngIf="forFile.progreso &&  (forFile.progreso > 0 && 100 > forFile.progreso)" style="color:    007bff;">cloud_upload</mat-icon>
                   <mat-icon matChipRemove *ngIf="forFile.progreso && forFile.progreso == 100">cancel</mat-icon>
                   <i *ngIf="forFile.estaSubiendo" class="fas fa-sm fa-sync-alt fa-spin" style="color: #007bff;"></i>

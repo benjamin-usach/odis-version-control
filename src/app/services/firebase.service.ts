@@ -229,10 +229,9 @@ export class FirebaseService {
           console.log(id);
           const storageRef = firebase.storage().ref();
           storageRef
-            .child(table + '/' + cfiles.id + ruta + nom)
-            .delete()
+            .child(`${table}/${cfiles.id}/${ruta}/${nom}`).delete()
             .then(function () {
-              that._afs.doc(table + '/' +  cfiles.id + ruta + id).delete();
+              that._afs.doc(`${table}/${cfiles.id}/${ruta}/${id}`).delete();
             })
             .catch(function (error) {
               console.error('Uh-oh, an error occurred!: files order', error);
