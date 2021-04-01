@@ -37,11 +37,21 @@ export class VersionHistoryComponent implements OnInit {
       for(let j = 0; j < this.versions.length; j++){
         this.versions[j].noHtml = this.versions[j].descripcion.replace(/<[^>]*>/g, ' ');
         let tempVer: version= this.versions[j];
-        if(this.versions[j]['has_files']){
-          this.fbs.getCollectionfb(`version/${this.versions[j].id}/files`).subscribe(res =>{
+        if(this.versions[j]['has_doc']){
+          this.fbs.getCollectionfb(`version/${this.versions[j].id}/docs`).subscribe(res =>{
             //Aqui tiene un bug 
             if(res && res.length > 0){
               tempVer.archivos = res;
+              this.versions[j] = tempVer;
+            }
+            else{console.log("no tiene archivos")}
+          });
+        }
+        if(this.versions[j]['has_image']){
+          this.fbs.getCollectionfb(`version/${this.versions[j].id}/image`).subscribe(res =>{
+            //Aqui tiene un bug 
+            if(res && res.length > 0){
+              tempVer.imagenes = res;
               this.versions[j] = tempVer;
             }
             else{console.log("no tiene archivos")}

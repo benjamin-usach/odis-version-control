@@ -14,6 +14,7 @@ export interface version{
     tags?: string[];
     noHtml?: string;
     archivos: any[];
+    imagenes: any[];
 }
 
 export interface Item {

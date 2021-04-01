@@ -13,12 +13,13 @@ import { VersionPipe } from './pipes/version.pipe';
 import { CarouselComponent } from './version-history/shared/carousel/carousel.component';
 import { MailerComponent } from './version-history/shared/mailer/mailer.component';
 import { MailAdminComponent } from './version-history/shared/mail-admin/mail-admin.component';
+import { DocIconsPipe } from './pipes/doc-icons.pipe';
 
 
 
 
 @NgModule({
-  declarations: [VersionHistoryComponent, ModalComponent, AccordionComponent, VersionPipe, CarouselComponent, MailerComponent, MailAdminComponent],
+  declarations: [VersionHistoryComponent, ModalComponent, AccordionComponent, VersionPipe, CarouselComponent, MailerComponent, MailAdminComponent, DocIconsPipe],
   imports: [
     CommonModule,
     NgbModule,

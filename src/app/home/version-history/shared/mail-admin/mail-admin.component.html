@@ -36,16 +36,16 @@
                                 <div>
                                     <div class="row">
                                         <label>Nombre de la lista</label>
-                                        <input type="text" placeholder = "Nombre" matTooltip="Debe contener al menos 3 caracteres" matTooltipPosition="right" class="form-control" id="name" aria-describedby="basic-addon3" [(ngModel)]="newListName">
+                                        <input type="text" placeholder = "Nombre" matTooltip="Debe contener al menos 4 caracteres" matTooltipPosition="right" class="form-control" id="name" aria-describedby="basic-addon3" [(ngModel)]="newListName">
                                     </div>
                                     <div class="row">
                                         <label>Correo</label>
-                                        <input #box type="mail" placeholder="Ej.: username@mail.com" class="form-control mb-3 animate__animated animate__faster" id="mail" aria-describedby="basic-addon3" (keyup.enter) = "addMailList(box.value); box.value = ''" [ngClass]="{animate__shakeX: correoInvalido}">      
+                                        <input #box type="mail" placeholder="Ej.: username@mail.com" [disabled] = "newListName.length < 4" class="form-control mb-3 animate__animated animate__faster" id="mail" aria-describedby="basic-addon3" (keyup.enter) = "addMailList(box.value); box.value = ''" [ngClass]="{animate__shakeX: correoInvalido}">      
                                     </div>
                                     <div class="row">
                                         <br>
                                         <div class="alert alert-danger mt-2 animate__animated animate__fadeInDown" role="alert" *ngIf="correoInvalido"> Correo inválido<button align="right" mat-icon-button (click) = "dismissAlert()"><mat-icon> close </mat-icon></button> </div>
-                                        <div class="alert alert-dangerccess mt-2 animate__animated animate__fadeInDown" role="alert" *ngIf="creado"> Se ha creado la lista<button align="right" mat-icon-button (click) = "dismissAlert()"><mat-icon> close </mat-icon></button> </div>
+                                        <div class="alert alert-success mt-2 animate__animated animate__fadeInDown" role="alert" *ngIf="creado"> Se ha creado la lista<button align="right" mat-icon-button (click) = "dismissAlert()"><mat-icon> close </mat-icon></button> </div>
                                     </div>
                                 </div>
                             </div>

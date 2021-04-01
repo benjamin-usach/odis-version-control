@@ -31,7 +31,7 @@
             <button *ngIf="admin" mat-button mat-stroked-button color="primary"  [matMenuTriggerFor]="menu">Administrar  <mat-icon>more_vert</mat-icon></button>
             <mat-menu #menu="matMenu">
               <button mat-menu-item (click)="openDialog()"><mat-icon>add</mat-icon> Agregar versión</button>
-              <button mat-menu-item (click)="openMailLists()">  Administrar Listas de Correo</button>
+              <button mat-menu-item (click)="openMailLists()"><mat-icon>recent_actors</mat-icon>  Administrar Listas de Correo</button>
             </mat-menu>
             <button *ngIf="!admin" mat-button mat-raised-button color="primary" class="mt-2" style="margin: auto; display: block;" (click)="swalSub()">Suscribirse</button>
           </div>

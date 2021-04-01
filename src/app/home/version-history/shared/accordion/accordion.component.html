@@ -32,17 +32,26 @@
         </ng-template>
         <ng-template ngbPanelContent>
             <div class="col">
-                <div class="row">
+                <div class="row-12">
                     <div [innerHTML] ="version.descripcion"></div>
                 </div>
                 <div *ngIf="version.has_files" class="row align-content-center" style="margin:auto;">
                     <mat-grid-list cols="5" rowHeight="2:1">
-                        <mat-grid-tile ngbSlide *ngFor="let img of version.archivos">
-                            <img src="{{img.url}}" class="zoom" style="height: 80%; display: block;cursor: pointer; border-radius: 2px;" (click)="modalImagenes(version.archivos, img.id, version.ver_number)">
+                        <mat-grid-tile ngbSlide *ngFor="let img of version.imagenes">
+                            <img src="{{img.url}}" class="zoom" style="height: 80%; display: block;cursor: pointer; border-radius: 2px;" (click)="modalImagenes(version.imagenes, img.id, version.ver_number)">
                         </mat-grid-tile>
                     </mat-grid-list> 
                 </div><br><br>
-                <mat-chip-list><mat-chip *ngFor="let tag of version.tags" color="primary"> {{tag}} </mat-chip> </mat-chip-list>
+                <div class="row-4" *ngIf="version.has_files">
+                    <button mat-stroked-button [matMenuTriggerFor]="menu"><mat-icon>file_present</mat-icon> Documentación ({{version.archivos.length}}) </button>
+                    <mat-menu #menu="matMenu">
+                       <span *ngFor="let archivo of version.archivos"><a [href]="archivo.url" target="_blank"><button mat-menu-item><mat-icon>{{archivo.nombre | docIcons}}</mat-icon>  {{ archivo.nombre }}</button></a></span>
+                      </mat-menu>
+                </div>
+                <br>
+                <div class="row-12">
+                    <mat-chip-list><mat-chip *ngFor="let tag of version.tags" color="primary"> {{tag}} </mat-chip> </mat-chip-list>
+                </div>    
             </div>
         </ng-template>
     </ngb-panel>

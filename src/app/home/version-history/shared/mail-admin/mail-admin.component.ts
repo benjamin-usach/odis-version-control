@@ -39,12 +39,12 @@ export class MailAdminComponent implements OnInit {
     }
     else{
       this.correoInvalido = true;
-      this.correoTrue(this.correoInvalido);
+      this.correoTrue();
     }
   }
 
-  async correoTrue(dismiss: boolean){
-    setTimeout( () => { dismiss = !dismiss }, 5000 )
+  correoTrue(){
+    setTimeout( () => { this.dismissAlert() }, 5000 )
   }
 
   dismissAlert(){
@@ -67,8 +67,7 @@ export class MailAdminComponent implements OnInit {
     this.newListList = [];
     this.isExpanded = false;
     this.creado = true;
-    this.correoTrue(this.creado);
-
+    setTimeout( () => { this.creado = false }, 5000 );
   }
 
 }
