@@ -7,15 +7,15 @@
         <h1 class="text-info">ODIS Version history</h1>
         <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Consequatur velit dignissimos, voluptas, beatae deleniti neque...</p>
         <br><br>
-        <div class="row p-3">
-          <div class="col-4">
+        <div class="row pb-2">
+          <div class="col">
             <mat-label>Filtrar por:</mat-label>
-            <mat-select #select matNativeControl id="filtro" name="filtro" style="width: 80%" [(value)] = "selected" (valueChange)="filtrar(select.value)">
+            <mat-select #select matNativeControl id="filtro" name="filtro" [(value)] = "selected" (valueChange)="filtrar(select.value)">
               <mat-option value="Todos" selected>Todos</mat-option>
               <mat-option *ngFor="let cat of cats" value="{{cat.id}}" selected>{{cat.nombre | titlecase}}</mat-option>
             </mat-select>
           </div>
-          <div class="col-4">
+          <div class="col">
             <mat-form-field class="example-form-field">
               <mat-label>
                 Buscar...
@@ -27,8 +27,12 @@
             </mat-form-field>
 
           </div>
-          <div class="col-4">
-            <button *ngIf="admin" mat-button mat-raised-button color="primary" class="mt-2"  style="margin: auto; display: block;" (click)="openDialog()">Crear nueva versión <mat-icon>add</mat-icon></button>
+          <div class="col" align="right">
+            <button *ngIf="admin" mat-button mat-stroked-button color="primary"  [matMenuTriggerFor]="menu">Administrar  <mat-icon>more_vert</mat-icon></button>
+            <mat-menu #menu="matMenu">
+              <button mat-menu-item (click)="openDialog()"><mat-icon>add</mat-icon> Agregar versión</button>
+              <button mat-menu-item (click)="openMailLists()">  Administrar Listas de Correo</button>
+            </mat-menu>
             <button *ngIf="!admin" mat-button mat-raised-button color="primary" class="mt-2" style="margin: auto; display: block;" (click)="swalSub()">Suscribirse</button>
           </div>
         </div>

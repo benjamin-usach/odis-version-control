@@ -1,0 +1,84 @@
+<meta name="Description" content="Component" />
+<div class="modal-header">
+  <h5 class="modal-title">Mail list admin</h5>
+  <button type="button" class="close" (click)="cerrar()">
+    <mat-icon class="mat-icon-close">close</mat-icon>
+  </button>
+</div>
+
+<div class="mat-app-background">
+  <div class="card-body">
+    <div class="mat-dialog-content">
+      <div class="row">
+          <div class="col-md-12">
+            <div class="col-5 input-group mb-3">
+                <input type="text" class="form-control" placeholder="Buscar" aria-label="Buscar" aria-describedby="basic-addon2">
+                <div class="input-group-append">
+                  <span class="input-group-text" id="basic-addon2"><mat-icon>search</mat-icon></span>
+                </div>
+              </div>
+          </div>
+          <br>
+          <div class="col-md-12">
+            <mat-accordion class="example-headers-align">
+                <mat-expansion-panel hideToggle [expanded] = "isExpanded">
+                    <mat-expansion-panel-header>
+                        <mat-panel-title>
+                            <a><mat-icon class="pt-2">add</mat-icon> Crear lista de correo </a>
+                        </mat-panel-title>
+                        <mat-panel-description>
+                            
+                        </mat-panel-description>
+                    </mat-expansion-panel-header>
+                    <ng-template matExpansionPanelContent>
+                        <div class="row">
+                            <div class="input-group mb-3 col-5">
+                                <div>
+                                    <div class="row">
+                                        <label>Nombre de la lista</label>
+                                        <input type="text" placeholder = "Nombre" matTooltip="Debe contener al menos 3 caracteres" matTooltipPosition="right" class="form-control" id="name" aria-describedby="basic-addon3" [(ngModel)]="newListName">
+                                    </div>
+                                    <div class="row">
+                                        <label>Correo</label>
+                                        <input #box type="mail" placeholder="Ej.: username@mail.com" class="form-control mb-3 animate__animated animate__faster" id="mail" aria-describedby="basic-addon3" (keyup.enter) = "addMailList(box.value); box.value = ''" [ngClass]="{animate__shakeX: correoInvalido}">      
+                                    </div>
+                                    <div class="row">
+                                        <br>
+                                        <div class="alert alert-danger mt-2 animate__animated animate__fadeInDown" role="alert" *ngIf="correoInvalido"> Correo inválido<button align="right" mat-icon-button (click) = "dismissAlert()"><mat-icon> close </mat-icon></button> </div>
+                                        <div class="alert alert-dangerccess mt-2 animate__animated animate__fadeInDown" role="alert" *ngIf="creado"> Se ha creado la lista<button align="right" mat-icon-button (click) = "dismissAlert()"><mat-icon> close </mat-icon></button> </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-7 pl-5" *ngIf="newListName.length > 3 && newListList.length >= 1 ">
+                                <p>Lista "{{newListName}}"</p>
+                                <cdk-virtual-scroll-viewport class="example-viewport" itemSize="50">
+                                    <div *ngFor="let item of newListList; let i = index" class="example-item px-2"><button mat-icon-button (click) = "quitarCorreo(i)"><mat-icon style="size: 90% "> remove_circle </mat-icon></button>{{item}} </div>
+                                </cdk-virtual-scroll-viewport>
+                                <button class="mt-2" mat-stroked-button (click)="crearLista();"> Crear lista </button>
+                            </div>
+                        </div>
+                    </ng-template>
+                </mat-expansion-panel>
+                <mat-expansion-panel hideToggle *ngFor="let list of mailLists">
+                    <mat-expansion-panel-header>
+                        <mat-panel-title>
+                            <strong>{{list.nombre | titlecase}}</strong>
+                        </mat-panel-title>
+                        <mat-panel-description>
+                            <div>{{list.list.length}} <mat-icon>perm_identity</mat-icon></div>
+                        </mat-panel-description>
+                    </mat-expansion-panel-header>
+                    <cdk-virtual-scroll-viewport style="height: 20vh; width: 100%;" itemSize="50">
+                        <div *ngFor="let correo of list.list; let i = index" class="example-item px-2">{{correo}}</div>
+                    </cdk-virtual-scroll-viewport>
+                </mat-expansion-panel>
+            </mat-accordion>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<div mat-dialog-actions align="center">
+    <button mat-stroked-button color="warn" (click)="cerrar()">Cancelar</button>
+</div>

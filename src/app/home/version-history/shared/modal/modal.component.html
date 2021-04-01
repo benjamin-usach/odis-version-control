@@ -79,7 +79,7 @@
             <input hi type="file" accept="image/*" id="imagenes" class="form-control" formControlName="imagenes" (change) = "onImageSelected($event)" multiple/>
             <div class="form-group col-md-12  animated fadeIn" *ngIf="imagenes && imagenes.length > 0">
               <mat-chip-list>
-                <mat-chip *ngFor="let forFile of imagenes; let i = index;" color="primary" [removable]="true" class="mx-3">
+                <mat-chip *ngFor="let forFile of imagenes; let i = index;" color="primary"  [removable]="true" class="mx-3">
                   <span>{{ forFile.nombreArchivo }}</span>
                   <span *ngIf="forFile.progreso &&  forFile.progreso > 0" style="margin-left: 6px; margin-right: 6px"><strong>{{forFile.progreso}}%</strong></span>
                   <mat-icon matChipRemove *ngIf="!forFile.progreso">cancel</mat-icon>
@@ -92,7 +92,7 @@
           </div>
           <div class="col-12 form-group">
             <label for="archivos">Cargar documentación</label>
-            <input hi type="file" accept=".xlsx,.xls,.doc, .docx,.ppt, .pptx,.txt,.pdf" id="archivos" class="form-control" formControlName="archivos" (change) = "onFileSelected($event)" multiple/>
+            <input hi type="file" accept=".xlsx,.xls,.doc, .docx,.ppt, .pptx,.txt,.pdf" id="archivos" matTooltip="Tipos de documentos permitidos: .xlsx,.xls,.doc, .docx,.ppt, .pptx,.txt,.pdf" [matTooltipHideDelay] = "3000" [matTooltipPosition]="'above'" class="form-control" formControlName="archivos" (change) = "onFileSelected($event)" multiple/>
             <br>
             <table mat-table *ngIf="archivos.length > 0" [dataSource]="archivos" class="mat-elevation-z8">
               <ng-container matColumnDef="nombreArchivo">

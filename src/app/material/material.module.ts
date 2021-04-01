@@ -21,6 +21,8 @@ import {MatSlideToggleModule} from '@angular/material/slide-toggle';
 import {MatTooltipModule} from '@angular/material/tooltip';
 import {MatProgressBarModule} from '@angular/material/progress-bar';
 import {MatTableModule} from '@angular/material/table';
+import {MatMenuModule} from '@angular/material/menu';
+import {ScrollingModule} from '@angular/cdk/scrolling';
 
 @NgModule({
   exports: [
@@ -44,7 +46,9 @@ import {MatTableModule} from '@angular/material/table';
     MatSlideToggleModule,
     MatTooltipModule,
     MatProgressBarModule,
-    MatTableModule
+    MatTableModule,
+    MatMenuModule,
+    ScrollingModule
   ]
 })
 export class MaterialModule { }

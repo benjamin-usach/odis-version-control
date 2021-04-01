@@ -3,6 +3,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { categorias, version } from 'src/app/interfaces/version.interface';
 import { FirebaseService } from 'src/app/services/firebase.service';
 import Swal from 'sweetalert2';
+import { MailAdminComponent } from './shared/mail-admin/mail-admin.component';
 import { ModalComponent } from './shared/modal/modal.component';
 
 
@@ -104,6 +105,12 @@ export class VersionHistoryComponent implements OnInit {
         Swal.fire("Lo mantendremos informado", '', 'success')
       }}
     );
+  }
+
+  openMailLists(){
+    this.dialog.open(MailAdminComponent, {
+      width: "80%",
+    })
 
   }
 
