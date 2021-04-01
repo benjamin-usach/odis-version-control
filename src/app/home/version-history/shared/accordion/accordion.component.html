@@ -1,5 +1,5 @@
 <ngb-accordion #acc="ngbAccordion" [closeOthers]="true" *ngIf="versions.length != 0; else loading">
-    <ngb-panel *ngFor="let version of versions" id="id_{{version.id}}">
+    <ngb-panel *ngFor="let version of versions; let i = index" id="id_{{version.id}}">
         <ng-template ngbPanelHeader class="cardClass" style="width: 100%;">
             <button ngbPanelToggle style="width: 100%; padding: 0; border: none; background: none;">
                 <div class="row">
@@ -18,7 +18,7 @@
                         Download • Try • Buy
                         <div class="d-flex flex-col flex-col-reverse" *ngIf="admin">
                             <button mat-button mat-raised-button color="warn" class="align-right ml-auto"
-                                (click)="borrar(version.id)">
+                                (click)="borrar(version.id, i)">
                                 <mat-icon> delete </mat-icon> Borrar
                             </button>
                             <button mat-button mat-raised-button color="accent" class="align-right ml-2"

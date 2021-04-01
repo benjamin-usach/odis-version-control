@@ -251,16 +251,37 @@ export class ModalComponent implements OnInit, OnDestroy {
 
   removeFile(type: number, index: number){
     if(this.editar){
-      
       if(type === 0){
         const aux: any = this.imagenes[index].archivo;
-        this.fb.deleteFile(aux.id, 'version', aux.nombre, 'image');
-        this.imagenes.splice(index, 1);
+        Swal.fire({
+          title: `¿Desea eliminar el archivo ${aux.nombre} de la base de datos?`,
+          showCancelButton: true,
+          confirmButtonText: "Si"
+        }).then(res => {
+          if(res.isConfirmed){
+            this.fb.deleteFile(aux.id, 'version', aux.nombre, 'image');
+            this.imagenes.splice(index, 1);
+          } else {
+            return
+          }
+        })
+        
       }
       if(type === 1){
         const aux: any = this.archivos[index].archivo;
-        this.fb.deleteFile(aux.id, 'version', aux.nombre, 'docs');
-        this.archivos.splice(index, 1);
+        Swal.fire({
+          title: `¿Desea eliminar el archivo ${aux.nombre} de la base de datos?`,
+          showCancelButton: true,
+          confirmButtonText: "Si"
+        }).then(res => {
+          if(res.isConfirmed){
+            this.fb.deleteFile(aux.id, 'version', aux.nombre, 'docs');
+            this.archivos.splice(index, 1);
+          } else {
+            return
+          }
+        })
+        
       }
     }
     else{

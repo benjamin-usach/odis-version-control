@@ -29,8 +29,22 @@ export class AccordionComponent implements OnInit {
     
   }
 
-  borrar(id: string){
-    this.fbs.deleteCollectionFb('version', id)
+  borrar(id: string, index: number){
+    const aux = this.versions[index];
+    if(aux.has_doc){
+      for(let i = 0; i < aux.archivos.length; i++){
+        const arch_aux = aux.archivos[i]
+        this.fbs.deleteFile(arch_aux.id, 'version', arch_aux.nombre, 'docs')
+      }
+    }  
+    if(aux.has_image){
+      for(let i = 0; i < aux.imagenes.length; i++){
+        const arch_aux = aux.imagenes[i]
+        this.fbs.deleteFile(arch_aux.id, 'version', arch_aux.nombre, 'image')
+      }
+    }  
+    this.fbs.deleteCollectionFb('version', id);
+    
   }
 
   openDialog(data: object = {}): void {
