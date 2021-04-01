@@ -33,7 +33,7 @@
               <button mat-menu-item (click)="openDialog()"><mat-icon>add</mat-icon> Agregar versión</button>
               <button mat-menu-item (click)="openMailLists()"><mat-icon>recent_actors</mat-icon>  Administrar Listas de Correo</button>
             </mat-menu>
-            <button *ngIf="!admin" mat-button mat-raised-button color="primary" class="mt-2" style="margin: auto; display: block;" (click)="swalSub()">Suscribirse</button>
+            <button *ngIf="!admin" mat-button mat-stroked-button color="primary" class="mt-2" style="margin: auto; display: block;" (click)="swalSub()">Suscribirse</button>
           </div>
         </div>
         <app-accordion *ngIf="selected === 'Todos' && !filtro" [versions] = "versions" ></app-accordion>

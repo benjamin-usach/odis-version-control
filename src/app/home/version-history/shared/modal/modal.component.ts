@@ -214,11 +214,6 @@ export class ModalComponent implements OnInit, OnDestroy {
 
   cerrar(){
     this.dialogRef.close();
-    this.dialog.open(MailerComponent,{
-      height: '80vh',
-      width: '60%',
-      disableClose:true
-    })
   }
   
   addTag(tag: string, tagTooltip: MatTooltip){

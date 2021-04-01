@@ -106,9 +106,10 @@ export class VersionHistoryComponent implements OnInit {
 
   swalSub(){
     Swal.fire({
-      title: "Ingrese su correo para suscribirse a nuestras actualizaciones:",
-      html: `<input type="text" id="newEmail" class="swal2-input" placeholder="Ingrese su correo aquí">`,
+      title: "¿Desea recibir notificaciones sobre nuestars actualizaciones en su correo?",
       confirmButtonText: "Suscibirse",
+      showCancelButton: true,
+      cancelButtonText: "Cancelar",
       icon: "question",
     }).then((result) =>{
       if(result.isConfirmed){

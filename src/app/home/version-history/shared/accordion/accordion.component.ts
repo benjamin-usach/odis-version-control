@@ -2,6 +2,7 @@ import { Component, Input, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { categorias, version } from 'src/app/interfaces/version.interface';
 import { FirebaseService } from 'src/app/services/firebase.service';
+import Swal from 'sweetalert2';
 import { CarouselComponent } from '../carousel/carousel.component';
 import { ModalComponent } from '../modal/modal.component';
 
@@ -30,6 +31,13 @@ export class AccordionComponent implements OnInit {
   }
 
   borrar(id: string, index: number){
+    Swal.fire({
+      title: `Confirmar borrado de elementos ${this.versions[index].ver_number}`,
+      showCancelButton: true,
+      cancelButtonText: "Cancelar",
+      showConfirmButton: true,
+
+    })
     const aux = this.versions[index];
     if(aux.has_doc){
       for(let i = 0; i < aux.archivos.length; i++){
